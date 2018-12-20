@@ -27,6 +27,10 @@ namespace Common.Models
         [StringLength(50)]
         public string Sucursal { get; set; }
 
+        [Required]
+        [StringLength(512)]
+        public string Correo { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cliente> Cliente { get; set; }
 

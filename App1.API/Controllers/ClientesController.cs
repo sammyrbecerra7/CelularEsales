@@ -11,6 +11,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using App1.API.Db;
 using Common.Models;
+using Common.Utils;
+using static Common.Enums.ResultEnum;
 
 namespace App1.API.Controllers
 {
@@ -26,6 +28,32 @@ namespace App1.API.Controllers
             return db.Cliente.Include(x=>x.Documentos);
         }
 
+
+
+       
+        [HttpPost]
+        public async Task<Response> ObtenerCliente(Vendedor vendedor)
+        {
+
+            try
+            {
+                if (string.IsNullOrEmpty(vendedor?.Correo))
+                {
+
+                    var Clientes = await db.Cliente.Where(x => x.Vendedor.Correo == vendedor.Correo)
+.ToListAsync();
+
+                    return new Response { IsSuccess = true, Message = Mensaje.OK, Result = Clientes };
+                }
+
+                return new Response { IsSuccess = false, Message = Mensaje.CorreoNoEncontrado, Result = EnumRetult.EMPTY };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false, Message = Mensaje.ErrorAlConsultar, Result = EnumRetult.EXCEPTION };
+                throw;
+            }
+        }
         // GET: api/Clientes/5
         [ResponseType(typeof(Cliente))]
         public async Task<IHttpActionResult> GetCliente(string id)
