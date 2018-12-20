@@ -6,6 +6,7 @@ namespace App1.Models
 {
     public class Border
     {
+
         public string Code
         {
             get;
