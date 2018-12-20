@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.Views.CobroPage"
+             Title="Realizar Cobro"
+             BackgroundColor="Silver">
+    <ContentPage.Content>
+        <Frame Margin="5" CornerRadius="20" HasShadow="True" BackgroundColor="White">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Padding="1"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            VerticalOptions="StartAndExpand">
+                    <Label 
+                            FontAttributes="Bold"
+                            FontSize="Medium" 
+                            Text="Forma Pago:"
+                            TextColor="Black">
+                    </Label>
+                    <Picker x:Name="Type" 
+                            SelectedIndex="1" 
+                            HorizontalOptions="LayoutOptions.FillAndExpand" 
+                            VerticalOptions="CenterAndExpand" 
+                            Title="Seleccione Forma Pago">
+                        <Picker.Items>
+                            <x:String>Efectivo</x:String>
+                            <x:String>Cheque</x:String>
+                            <x:String>Transferencia</x:String>
+                            <x:String>Débito a cuenta</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+                <StackLayout
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Orientation="Horizontal"
+                            VerticalOptions="StartAndExpand">
+                    <Label 
+                            FontAttributes="Bold"
+                            FontSize="Medium" 
+                            Text="Valor a Cobrar:"
+                            TextColor="Black">
+                    </Label>
+                    <Entry 
+                        Grid.Row="0" 
+                        Grid.Column="2" 
+                        Text="{Binding Email,Mode=TwoWay}" 
+                        Placeholder="Ingrese valor">
+                    </Entry>
+                </StackLayout>
+                <Button
+            Grid.Row="3"            
+            BackgroundColor="#0072C6"
+            Text="IR A BWISE"
+            TextColor="White"
+            BorderRadius="10"
+            VerticalOptions="Center"
+            FontSize="Large"
+            Command="{Binding PagoCommand}"           
+           />
+            </Grid>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

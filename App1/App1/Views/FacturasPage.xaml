@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.Views.FacturasPage"
+             BackgroundColor="Silver"
+             Title="Listado de Facturas">
+    <ContentPage.Content>
+        <StackLayout >
+            <StackLayout  HorizontalOptions="FillAndExpand" Margin="2" VerticalOptions="Start">
+                <Button BackgroundColor="Navy" HorizontalOptions="FillAndExpand" Command="{Binding PagarCommand}" TextColor="White" Text="Realizar Cobro"/>
+            </StackLayout>
+
+            <ListView 
+                BackgroundColor="Silver"
+                HasUnevenRows="true" 
+                ItemsSource="{Binding Facturas}"
+                SeparatorVisibility="None"
+               >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Margin="5" CornerRadius="20" HasShadow="True" BackgroundColor="White">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding DetalleDocumentoCommand}">
+                                    </TapGestureRecognizer>
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout 
+                                        Grid.Row="0"
+                                        VerticalOptions="Center" Orientation="Horizontal">
+                                        <Label 
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="StartAndExpand"
+                                            FontSize="Medium" 
+                                            Text="{Binding NombreCorto}"
+                                            TextColor="Black">
+                                        </Label>
+                                        <Label  
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="End"
+                                            FontSize="Medium" 
+                                            Text="{Binding ValorTotal}"
+                                            TextColor="Black">
+                                        </Label>
+                                    </StackLayout>
+                                    <StackLayout Grid.Row="1" >
+                                        <Label 
+                                            Text="{Binding FechaVencimiento, StringFormat='{0:MMMM d, yyyy}'}"
+                                            TextColor="Black">
+                                        </Label>
+                                    </StackLayout>
+                                    <!--<StackLayout IsVisible="{Binding EsFactura}" Orientation="Horizontal" Grid.Row="2"  >-->
+                                    <Switch IsToggled="{Binding Seleccionado,Mode=TwoWay}" HorizontalOptions="End" Grid.Row="2"  >
+                                            
+                                        </Switch>
+                                    <!--</StackLayout>-->
+                                   
+                                    <Image 
+                                        Grid.Column="2"
+                                        Grid.RowSpan="2"
+                                        HorizontalOptions="End" 
+                                        Source="ic_chevron_right">
+                                    </Image>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

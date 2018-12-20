@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.Views.InfoCreditoPage"
+             Title="Clientes"
+             BackgroundColor="Silver">
+    <ContentPage.Content>
+        <StackLayout  >
+            
+            <Frame Margin="5" CornerRadius="20" HasShadow="True" BackgroundColor="White">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Padding="1"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            VerticalOptions="StartAndExpand">
+                        <Label 
+                            FontAttributes="Bold"
+                            FontSize="Medium" 
+                            Text="Nombre:"
+                            TextColor="Black">
+                        </Label>
+                        <Label 
+                            FontSize="Medium" 
+                            Text="{Binding InfoCredito.NombreVendedor}"
+                            TextColor="Black">
+                        </Label>
+                    </StackLayout>
+                    <StackLayout
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Orientation="Horizontal"
+                            VerticalOptions="StartAndExpand">
+                        <Label 
+                            FontAttributes="Bold"
+                            FontSize="Medium" 
+                            Text="Código:"
+                            TextColor="Black">
+                        </Label>
+                        <Label 
+                            FontSize="Medium" 
+                            Text="{Binding InfoCredito.VendedorCodigo}"
+                            TextColor="Black">
+                        </Label>
+                    </StackLayout>
+                    <StackLayout
+                            Grid.Column="0"
+                            Grid.Row="2"
+                            Orientation="Horizontal"
+                            VerticalOptions="StartAndExpand">
+                        <Label 
+                            FontAttributes="Bold"
+                            FontSize="Medium" 
+                            Text="Límite de Crédito:"
+                            TextColor="Black">
+                        </Label>
+                        <Label 
+                            FontSize="Medium" 
+                            Text="{Binding InfoCredito.CreditoLimite}"
+                            TextColor="Black">
+                        </Label>
+                    </StackLayout>
+                    <StackLayout
+                            Grid.Column="0"
+                            Grid.Row="3"
+                            Orientation="Horizontal"
+                            VerticalOptions="StartAndExpand">
+                        <Label 
+                            FontAttributes="Bold"
+                            FontSize="Medium" 
+                            Text="Crédito Actual:"
+                            TextColor="Black">
+                        </Label>
+                        <Label 
+                            FontSize="Medium" 
+                            Text="{Binding InfoCredito.CreditoActual}"
+                            TextColor="Black">
+                        </Label>
+                    </StackLayout>
+                    <StackLayout
+                            Grid.Column="0"
+                            Grid.Row="4"
+                            Orientation="Horizontal"
+                            VerticalOptions="StartAndExpand">
+                        <Label 
+                            FontAttributes="Bold"
+                            FontSize="Medium" 
+                            Text="Objetivo de Cobro:"
+                            TextColor="Black">
+                        </Label>
+
+                        <Label 
+                            FontSize="Medium" 
+                            Text="{Binding InfoCredito.ObjetivoCobro}"
+                            TextColor="Black">
+                        </Label>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
