@@ -17,6 +17,7 @@ using static Common.Enums.ResultEnum;
 namespace App1.API.Controllers
 {
 
+    [RoutePrefix("api/Clientes")]
     public class ClientesController : ApiController
     {
         private Model1 db = new Model1();
@@ -32,23 +33,40 @@ namespace App1.API.Controllers
 
        
         [HttpPost]
+        [Route("ObtenerClientePorVendedor")]
         public async Task<Response> ObtenerCliente(Vendedor vendedor)
         {
 
             try
             {
-                if (string.IsNullOrEmpty(vendedor?.Correo))
+                if (!string.IsNullOrEmpty(vendedor?.Correo))
                 {
-
+                    db.Configuration.ProxyCreationEnabled = false;
                     var Clientes = await db.Cliente.Where(x => x.Vendedor.Correo == vendedor.Correo)
-.ToListAsync();
+                                            .Select(x => new ClienteResponse
+                                            {
+                                                NombreCompleto = x.NombreCompleto,
+                                                Codigo = x.Codigo,
+                                                CreditoDisponible = x.CreditoDisponible,
+                                                CreditoLimite = x.CreditoLimite,
+                                                VendedorCodigo = x.VendedorCodigo,
+                                                Garantia = x.Garantia,
+                                                RUC = x.RUC,
+                                                TotalFacturado = x.TotalFacturado,
+                                                TotalVencido = x.TotalVencido,
+                                                Documentos = x.Documentos,
+                                                ObjetivoCobro = x.ObjetivoCobro,
+                                                EntregasAbiertas = x.EntregasAbiertas,
+                                                TotalChequesPosfechados = x.TotalChequesPosfechados,
+                                                OrdenesAbiertas = x.OrdenesAbiertas,
+                                            }).ToListAsync();
 
                     return new Response { IsSuccess = true, Message = Mensaje.OK, Result = Clientes };
                 }
 
                 return new Response { IsSuccess = false, Message = Mensaje.CorreoNoEncontrado, Result = EnumRetult.EMPTY };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new Response { IsSuccess = false, Message = Mensaje.ErrorAlConsultar, Result = EnumRetult.EXCEPTION };
                 throw;

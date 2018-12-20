@@ -149,7 +149,7 @@ namespace App1.ViewModels
             if (a.IsSuccess)
             {
                 await this.EliminarTodosClientes();
-                //await this.CargarClientes();
+                await this.CargarClientes();
                 //await this.InsertarTodosClientes();
 
                 //await this.EliminarTodosFactura();
