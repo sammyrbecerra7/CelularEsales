@@ -32,37 +32,44 @@ namespace App1.API.Controllers
 
         [HttpPost]
         [Route("ObtenerFacturasPorCliente")]
-        public async Task<Response> ObtenerFactura(Cliente cliente)
+        public async Task<Response> ObtenerFactura(List<Cliente>  listadoclientes)
         {
 
             try
             {
-                if (!string.IsNullOrEmpty(cliente?.Codigo))
+                if (listadoclientes != null)
                 {
-                    db.Configuration.ProxyCreationEnabled = false;
-                    var facturas = await db.Documentos.Where(x => x.ClienteCodigo == cliente.Codigo)
-                                            .Select(x => new DocumentoResponse
-                                            {
-                                                Codigo = x.Codigo,
-                                                ClienteCodigo = x.ClienteCodigo,
-                                                SpecialGLIndicator = x.SpecialGLIndicator,
-                                                FacturaNumeroLegal = x.FacturaNumeroLegal,
-                                                FechaDocumento = x.FechaDocumento,
-                                                Referencia = x.Referencia,
-                                                TipoDocumento = x.TipoDocumento,
-                                                ValorMonedaLocal = x.ValorMonedaLocal,
-                                                Valor = x.Valor,
-                                                Texto = x.Texto,
-                                                PaymentTerm = x.PaymentTerm,
-                                                NumeroDiasAVencer = x.NumeroDiasAVencer,
-                                                ValorNeto = x.ValorNeto,
-                                                NombreCorto = x.NombreCorto,
-                                                EbillingDocument = x.EbillingDocument
-                                            }).ToListAsync();
-
-                    return new Response { IsSuccess = true, Message = Mensaje.OK, Result = facturas };
+                    List<DocumentoResponse> documentos = new List<DocumentoResponse>();
+                    foreach (Cliente cliente in listadoclientes)
+                    {
+                        if (!string.IsNullOrEmpty(cliente?.Codigo))
+                        {
+                            db.Configuration.ProxyCreationEnabled = false;
+                            var facturas = await db.Documentos.Where(x => x.ClienteCodigo == cliente.Codigo)
+                                                    .Select(x => new DocumentoResponse
+                                                    {
+                                                        Codigo = x.Codigo,
+                                                        ClienteCodigo = x.ClienteCodigo,
+                                                        SpecialGLIndicator = x.SpecialGLIndicator,
+                                                        FacturaNumeroLegal = x.FacturaNumeroLegal,
+                                                        FechaDocumento = x.FechaDocumento,
+                                                        Referencia = x.Referencia,
+                                                        TipoDocumento = x.TipoDocumento,
+                                                        ValorMonedaLocal = x.ValorMonedaLocal,
+                                                        Valor = x.Valor,
+                                                        Texto = x.Texto,
+                                                        PaymentTerm = x.PaymentTerm,
+                                                        NumeroDiasAVencer = x.NumeroDiasAVencer,
+                                                        ValorNeto = x.ValorNeto,
+                                                        NombreCorto = x.NombreCorto,
+                                                        EbillingDocument = x.EbillingDocument
+                                                    }).ToListAsync();
+                            documentos.AddRange(facturas);
+                        }
+                    }
+                    return new Response { IsSuccess = true, Message = Mensaje.OK, Result = documentos };
                 }
-
+                
                 return new Response { IsSuccess = false, Message = Mensaje.CorreoNoEncontrado, Result = EnumRetult.EMPTY };
             }
             catch (Exception ex)
