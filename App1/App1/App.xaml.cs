@@ -52,8 +52,8 @@ namespace App1
             //descomentar todo el bloquesiguiente para entrar con el login SB
             if (Settings.IsRemembered && !string.IsNullOrEmpty(Settings.UserASP))
             {
-                //para sincronizar SB
-                //Task.Run(() => this.Sincronizar()).Wait();
+                Task.Run(() => this.CargarClientes()).Wait();
+               
 
                 Application.Current.MainPage = new MasterPage();
 
@@ -115,17 +115,7 @@ namespace App1
 
         private async Task CargarClientes()
         {
-            var response = await apiService.GetList<Cliente>(Global.UrlBase, Global.RoutePrefix, Global.ListarClientes, Settings.TokenType, Settings.AccessToken);
-
-            if (!response.IsSuccess)
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
-                 Application.Current.MainPage=new NavigationPage(new LoginPage());
-                return;
-            }
-
-            ListaClientes=(List<Cliente>)response.Result;
-            
+            App.ListaClienteSqLite = await App.dataService.ListarClientes();
         }
 
 

@@ -150,7 +150,7 @@ namespace App1.ViewModels
             {
                 await this.EliminarTodosClientes();
                 await this.CargarClientes();
-                //await this.InsertarTodosClientes();
+                await this.InsertarTodosClientes();
 
                 //await this.EliminarTodosFactura();
                 //await this.CargarFacturas();
@@ -214,10 +214,11 @@ namespace App1.ViewModels
         }
         private async Task CargarClientes()
         {
-            var response = await apiService.GetList<Cliente>(Global.UrlBase, Global.RoutePrefix, Global.ListarClientes, Settings.TokenType, Settings.AccessToken);
+            var response = await apiService.Post<List<Cliente>>(Global.UrlBase,Global.RoutePrefix, Global.ObtenerClientePorVendedor,Settings.TokenType,Settings.AccessToken,new Vendedor {Correo=Settings.UserASP });
 
             if (!response.IsSuccess)
             {
+              
                 await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
                 Application.Current.MainPage = new NavigationPage(new LoginPage());
                 return;

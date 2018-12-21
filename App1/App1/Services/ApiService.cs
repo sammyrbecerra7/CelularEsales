@@ -317,7 +317,7 @@
             string controller,
             string tokenType,
             string accessToken,
-            T model)
+            object model)
         {
             try
             {
@@ -340,14 +340,20 @@
                     return error;
                 }
 
-                var newRecord = JsonConvert.DeserializeObject<T>(result);
-
-                return new Response
+                var newRecord = JsonConvert.DeserializeObject<Response>(result);
+                if (newRecord.IsSuccess)
                 {
-                    IsSuccess = true,
-                    Message = "Record added OK",
-                    Result = newRecord,
-                };
+                    var NewResponse = JsonConvert.DeserializeObject<T>(newRecord.Result.ToString());
+                    return new Response
+                    {
+                        IsSuccess = newRecord.IsSuccess,
+                        Message = newRecord.Message,
+                        Result = NewResponse,
+                    };
+
+                }
+
+                return newRecord;
             }
             catch (Exception ex)
             {
@@ -363,7 +369,7 @@
             string urlBase,
             string servicePrefix,
             string controller,
-            T model)
+            object model)
         {
             try
             {
