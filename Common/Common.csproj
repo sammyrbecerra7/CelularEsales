@@ -63,7 +63,9 @@
     <Compile Include="Models\Vendedor.cs" />
     <Compile Include="Utils\ClienteResponse.cs" />
     <Compile Include="Utils\DocumentoResponse.cs" />
+    <Compile Include="Utils\InfoCreditoResponse.cs" />
     <Compile Include="Utils\Mensaje.cs" />
+    <Compile Include="Utils\PagoResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

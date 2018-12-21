@@ -31,10 +31,70 @@ namespace App1.API.Controllers
 
 
         [HttpPost]
+        [Route("ObtenerInfoCredito")]
+        public async Task<Response> ObtenerInfoCredito(Vendedor vendedor)
+        {
+
+            try
+            {
+                if (!string.IsNullOrEmpty(vendedor?.Codigo))
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    var infoCredito = await db.InfoCredito.Where(x => x.Vendedor.Correo == vendedor.Correo)
+                                            .Select(x => new InfoCreditoResponse
+                                            {
+                                                Codigo = x.Codigo,
+                                                VendedorCodigo = x.VendedorCodigo,
+                                                Anio = x.Anio,
+                                                Mes = x.Mes,
+                                                CreditoLimite = x.CreditoLimite,
+                                                CreditoActual = x.CreditoActual,
+                                                ObjetivoCobro = x.ObjetivoCobro
+                                            }).ToListAsync();
+
+                    return new Response { IsSuccess = true, Message = Mensaje.OK, Result = infoCredito };
+                }
+
+                return new Response { IsSuccess = false, Message = Mensaje.CorreoNoEncontrado, Result = EnumRetult.EMPTY };
+            }
+            catch (Exception ex)
+            {
+                return new Response { IsSuccess = false, Message = Mensaje.ErrorAlConsultar, Result = EnumRetult.EXCEPTION };
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("InsertarPagos")]
+        public async Task<Response> InsertarPagos(List<Pagos> listadopagos)
+        {
+            if (listadopagos != null)
+            {
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+
+                        db.Pagos.AddRange(listadopagos);
+                        await db.SaveChangesAsync();
+                        transaction.Commit();
+                        return new Response { IsSuccess = true, Message = Mensaje.OK, Result = null };
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return new Response { IsSuccess = false, Message = Mensaje.ErrorAlConsultar, Result = EnumRetult.EXCEPTION };
+                        throw;
+                    }
+                }
+            }
+            return new Response { IsSuccess = false, Message = Mensaje.CorreoNoEncontrado, Result = EnumRetult.EMPTY };
+        }
+
+        [HttpPost]
         [Route("ObtenerFacturasPorCliente")]
         public async Task<Response> ObtenerFactura(List<Cliente>  listadoclientes)
         {
-
             try
             {
                 if (listadoclientes != null)
