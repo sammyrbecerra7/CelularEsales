@@ -9,6 +9,6 @@ namespace Common.Enums
   public static class ResultEnum
     {
 
-       public enum EnumRetult { NOTFOUND, EXCEPTION, EMPTY,};
+       public enum EnumRetult { NOTFOUND=404, EXCEPTION=500, EMPTY=100,};
     }
 }
