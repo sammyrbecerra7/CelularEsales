@@ -152,29 +152,34 @@ namespace App1.ViewModels
                 await this.CargarClientes();
                 await this.InsertarTodosClientes();
 
-                //await this.EliminarTodosFactura();
-                //await this.CargarFacturas();
-                //await this.InsertarTodosFactura();
+                await this.EliminarTodosDocumentos();
+                await this.CargarDocumentos();
+                await this.InsertarTodosDocumentos();
             }
         }
 
 
-        private async Task InsertarTodosFactura()
+        private async Task InsertarTodosDocumentos()
         {
-            var lista =App.ListaFacturas.Select(c => new EstadoCuentaSqLite
+            var lista =App.ListaFacturas.Select(c => new DocumentosSqLite
             {
                 Codigo = c.Codigo,
                 ClienteCodigo = c.ClienteCodigo,
                 NombreCorto = c.NombreCorto,
-                Tipo = c.TipoDocumento,
-                ValorTotal = c.Valor
+                TipoDocumento = c.TipoDocumento,
+                Valor = c.Valor,
+                ValorMonedaLocal=c.ValorMonedaLocal,
+                EbillingDocument=c.EbillingDocument,
+                FacturaNumeroLegal=c.FacturaNumeroLegal
+                
+                
             }).ToList();
             App.ListaFacturaSqLite = lista;
             await App.dataService.Insert(App.ListaFacturaSqLite);
         }
-        private async Task CargarFacturas()
+        private async Task CargarDocumentos()
         {
-            var response = await apiService.GetList<Documentos>(Global.UrlBase, Global.RoutePrefix, Global.ListarFacturas, Settings.TokenType, Settings.AccessToken, App.ListaClientes);
+            var response = await apiService.Post<List<Documentos>>(Global.UrlBase, Global.RoutePrefix, Global.ListarDocumentos, Settings.TokenType, Settings.AccessToken, App.ListaClienteSqLite);
 
             if (!response.IsSuccess)
             {
@@ -208,7 +213,7 @@ namespace App1.ViewModels
             await App.dataService.EliminarTodosClientes();
         }
 
-        private async Task EliminarTodosFactura()
+        private async Task EliminarTodosDocumentos()
         {
             await App.dataService.EliminarTodosEstadoCuenta();
         }

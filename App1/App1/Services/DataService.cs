@@ -29,7 +29,7 @@ namespace App1.Services
             {
                 await connection.CreateTableAsync<VendedorSqLite>().ConfigureAwait(false);
                 await connection.CreateTableAsync<ClienteSqLite>().ConfigureAwait(false);
-                await connection.CreateTableAsync<EstadoCuentaSqLite>().ConfigureAwait(false);
+                await connection.CreateTableAsync<DocumentosSqLite>().ConfigureAwait(false);
                 await connection.CreateTableAsync<PagosSqLite>().ConfigureAwait(false);
                 await connection.CreateTableAsync<FormaPagoSqLite>().ConfigureAwait(false);
                 await connection.CreateTableAsync<ContrapartidaSqLite>().ConfigureAwait(false);
@@ -104,11 +104,11 @@ namespace App1.Services
             return info;
         }
 
-        public async Task<List<EstadoCuentaSqLite>> ListarFacturas()
+        public async Task<List<DocumentosSqLite>> ListarFacturas()
         {
-            var query = await this.connection.QueryAsync<EstadoCuentaSqLite>("select * from [EstadoCuentaSqLite]");
+            var query = await this.connection.QueryAsync<DocumentosSqLite>("select * from [EstadoCuentaSqLite]");
             var array = query.ToArray();
-            var list = array.Select(c => new EstadoCuentaSqLite
+            var list = array.Select(c => new DocumentosSqLite
             {
                 Codigo = c.Codigo,
                 ClienteCodigo = c.ClienteCodigo,
@@ -128,7 +128,7 @@ namespace App1.Services
 
         public async Task EliminarTodosEstadoCuenta()
         {
-            var query = await this.connection.QueryAsync<EstadoCuentaSqLite>("delete from [EstadoCuentaSqLite]");
+            var query = await this.connection.QueryAsync<DocumentosSqLite>("delete from [EstadoCuentaSqLite]");
         }
     }
 }

@@ -23,7 +23,7 @@ namespace App1
         public static ApiService apiService { get; set; }
         public static List<ClienteSqLite> ListaClienteSqLite { get; set; }
 
-        public static List<EstadoCuentaSqLite> ListaFacturaSqLite { get; set; }
+        public static List<DocumentosSqLite> ListaFacturaSqLite { get; set; }
 
         public static List<Cliente> ListaClientes { get; set; }
 
@@ -45,7 +45,7 @@ namespace App1
             apiService = new ApiService();
             ListaClientes = new List<Cliente>();
             ListaFacturas = new List<Documentos>();
-            ListaFacturaSqLite = new List<EstadoCuentaSqLite>();
+            ListaFacturaSqLite = new List<DocumentosSqLite>();
 
             Application.Current.MainPage = new MasterPage();
 
@@ -98,7 +98,7 @@ namespace App1
 
         private async Task InsertarTodosEstadoCuenta()
         {
-            var lista = ListaFacturas.Select(x => new EstadoCuentaSqLite { Codigo = x.Codigo, ClienteCodigo = x.ClienteCodigo, NombreCorto = x.NombreCorto,Tipo = x.TipoDocumento, ValorTotal = x.Valor }).ToList();
+            var lista = ListaFacturas.Select(x => new DocumentosSqLite { Codigo = x.Codigo, ClienteCodigo = x.ClienteCodigo, NombreCorto = x.NombreCorto,Tipo = x.TipoDocumento, ValorTotal = x.Valor }).ToList();
             ListaFacturaSqLite = lista;
             await dataService.Insert(ListaFacturaSqLite);
         }

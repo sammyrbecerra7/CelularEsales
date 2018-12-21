@@ -20,6 +20,6 @@ namespace App1.Domain.Utils
 
         public static string ObtenerClientePorVendedor { get { return "/Clientes/ObtenerClientePorVendedor"; } set {; } }
 
-        public static string ListarFacturas { get { return "/Factura/ListarFacturaPorListaCliente"; } set {; } }
+        public static string ListarDocumentos { get { return "/Clientes/ObtenerFacturasPorCliente"; } set {; } }
     }
 }
