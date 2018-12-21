@@ -62,6 +62,7 @@
     <Compile Include="sysdiagrams.cs" />
     <Compile Include="Models\Vendedor.cs" />
     <Compile Include="Utils\ClienteResponse.cs" />
+    <Compile Include="Utils\DocumentoResponse.cs" />
     <Compile Include="Utils\Mensaje.cs" />
   </ItemGroup>
   <ItemGroup>
