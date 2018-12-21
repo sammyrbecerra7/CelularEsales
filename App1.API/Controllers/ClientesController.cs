@@ -16,7 +16,7 @@ using static Common.Enums.ResultEnum;
 
 namespace App1.API.Controllers
 {
-
+    [Authorize]
     [RoutePrefix("api/Clientes")]
     public class ClientesController : ApiController
     {
