@@ -45,7 +45,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="ModelsResult\ClienteSqLite.cs" />
     <Compile Include="ModelsResult\ContrapartidaSqLite.cs" />
-    <Compile Include="ModelsResult\EstadoCuentaSqLite.cs" />
+    <Compile Include="ModelsResult\DocumentosSqLite.cs" />
     <Compile Include="ModelsResult\FormaPagoSqLite.cs" />
     <Compile Include="ModelsResult\InfoCreditoSqLite.cs" />
     <Compile Include="ModelsResult\PagosSqLite.cs" />

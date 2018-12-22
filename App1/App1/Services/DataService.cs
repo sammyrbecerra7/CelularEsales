@@ -29,7 +29,7 @@ namespace App1.Services
             {
                 await connection.CreateTableAsync<VendedorSqLite>().ConfigureAwait(false);
                 await connection.CreateTableAsync<ClienteSqLite>().ConfigureAwait(false);
-                await connection.CreateTableAsync<EstadoCuentaSqLite>().ConfigureAwait(false);
+                await connection.CreateTableAsync<DocumentosSqLite>().ConfigureAwait(false);
                 await connection.CreateTableAsync<PagosSqLite>().ConfigureAwait(false);
                 await connection.CreateTableAsync<FormaPagoSqLite>().ConfigureAwait(false);
                 await connection.CreateTableAsync<ContrapartidaSqLite>().ConfigureAwait(false);
@@ -71,17 +71,22 @@ namespace App1.Services
         {
             var query = await this.connection.QueryAsync<ClienteSqLite>("select * from [ClienteSqLite]");
             var array = query.ToArray();
-            var list = array.Select(c => new ClienteSqLite
+            var list = array.Select(x => new ClienteSqLite
             {
-                Codigo = c.Codigo,
-                NombreCompleto = c.NombreCompleto,
-                VendedorCodigo = c.VendedorCodigo,
-                Limite = c.Limite,
-                Garantia = c.Garantia,
-                TotalVencido = c.TotalVencido,
-                TotalAdeudado = c.TotalAdeudado,
-                UltimaFechaActualizacion = c.UltimaFechaActualizacion,
-                ObjetivoCobro = c.ObjetivoCobro
+                NombreCompleto = x.NombreCompleto,
+                Codigo = x.Codigo,
+                CreditoDisponible = x.CreditoDisponible,
+                CreditoLimite = x.CreditoLimite,
+                VendedorCodigo = x.VendedorCodigo,
+                Garantia = x.Garantia,
+                RUC = x.RUC,
+                TotalFacturado = x.TotalFacturado,
+                TotalVencido = x.TotalVencido,
+                ObjetivoCobro = x.ObjetivoCobro,
+                EntregasAbiertas = x.EntregasAbiertas,
+                TotalChequesPosfechados = x.TotalChequesPosfechados,
+                OrdenesAbiertas = x.OrdenesAbiertas,
+
             }).ToList();
             return list;
         }
@@ -93,7 +98,6 @@ namespace App1.Services
             var info = array.Select(c => new InfoCreditoSqLite
             {
                 Codigo = c.Codigo,
-                NombreVendedor = c.NombreVendedor,
                 VendedorCodigo = c.VendedorCodigo,
                 Anio = c.Anio,
                 Mes = c.Mes,
@@ -104,19 +108,28 @@ namespace App1.Services
             return info;
         }
 
-        public async Task<List<EstadoCuentaSqLite>> ListarFacturas()
+        public async Task<List<DocumentosSqLite>> ListarDocumentos()
         {
-            var query = await this.connection.QueryAsync<EstadoCuentaSqLite>("select * from [EstadoCuentaSqLite]");
+            var query = await this.connection.QueryAsync<DocumentosSqLite>("select * from [DocumentosSqLite]");
             var array = query.ToArray();
-            var list = array.Select(c => new EstadoCuentaSqLite
+            var list = array.Select(x => new DocumentosSqLite
             {
-                Codigo = c.Codigo,
-                ClienteCodigo = c.ClienteCodigo,
-                NombreCorto = c.NombreCorto,
-                Tipo = c.Tipo,
-                ValorTotal = c.ValorTotal,
-                ValorRetencion = c.ValorRetencion,
-                FechaVencimiento = c.FechaVencimiento
+                Codigo = x.Codigo,
+                ClienteCodigo = x.ClienteCodigo,
+                SpecialGLIndicator = x.SpecialGLIndicator,
+                FacturaNumeroLegal = x.FacturaNumeroLegal,
+                FechaDocumento = x.FechaDocumento,
+                Referencia = x.Referencia,
+                TipoDocumento = x.TipoDocumento,
+                ValorMonedaLocal = x.ValorMonedaLocal,
+                Valor = x.Valor,
+                Texto = x.Texto,
+                PaymentTerm = x.PaymentTerm,
+                NumeroDiasAVencer = x.NumeroDiasAVencer,
+                ValorNeto = x.ValorNeto,
+                NombreCorto = x.NombreCorto,
+                EbillingDocument = x.EbillingDocument
+
             }).ToList();
             return list;
         }
@@ -128,7 +141,12 @@ namespace App1.Services
 
         public async Task EliminarTodosEstadoCuenta()
         {
-            var query = await this.connection.QueryAsync<EstadoCuentaSqLite>("delete from [EstadoCuentaSqLite]");
+            var query = await this.connection.QueryAsync<DocumentosSqLite>("delete from [DocumentosSqLite]");
+        }
+
+        public async Task EliminarInformacionCredito()
+        {
+            var query = await this.connection.QueryAsync<InfoCreditoSqLite>("delete from [InfoCreditoSqLite]");
         }
     }
 }
