@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App1.Views.InfoCreditoPage"
-             Title="Clientes"
+             Title="Información de Crédito"
              BackgroundColor="Silver">
     <ContentPage.Content>
         <StackLayout  >
@@ -10,23 +10,24 @@
             <Frame Margin="5" CornerRadius="20" HasShadow="True" BackgroundColor="White">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <StackLayout Padding="1"
+                    <StackLayout
                             Grid.Column="0"
                             Grid.Row="0"
                             Orientation="Horizontal"
                             VerticalOptions="StartAndExpand">
                         <Label 
-                            FontAttributes="Bold"
-                            FontSize="Medium" 
-                            Text="Nombre:"
+                           FontSize="Medium" 
+                            Text="Código:"
                             TextColor="Black">
+                            >
                         </Label>
                         <Label 
                             FontSize="Medium" 
-                            Text="{Binding InfoCredito.NombreVendedor}"
+                            FontAttributes="Bold"
+                            Text="{Binding InfoCredito.VendedorCodigo}"
                             TextColor="Black">
                         </Label>
                     </StackLayout>
@@ -36,14 +37,15 @@
                             Orientation="Horizontal"
                             VerticalOptions="StartAndExpand">
                         <Label 
-                            FontAttributes="Bold"
+                            
                             FontSize="Medium" 
-                            Text="Código:"
+                            Text="Límite de Crédito:"
                             TextColor="Black">
                         </Label>
                         <Label 
                             FontSize="Medium" 
-                            Text="{Binding InfoCredito.VendedorCodigo}"
+                            FontAttributes="Bold"
+                            Text="{Binding InfoCredito.CreditoLimite}"
                             TextColor="Black">
                         </Label>
                     </StackLayout>
@@ -53,14 +55,15 @@
                             Orientation="Horizontal"
                             VerticalOptions="StartAndExpand">
                         <Label 
-                            FontAttributes="Bold"
+                           
                             FontSize="Medium" 
-                            Text="Límite de Crédito:"
+                            Text="Crédito Actual:"
                             TextColor="Black">
                         </Label>
                         <Label 
                             FontSize="Medium" 
-                            Text="{Binding InfoCredito.CreditoLimite}"
+                             FontAttributes="Bold"
+                            Text="{Binding InfoCredito.CreditoActual}"
                             TextColor="Black">
                         </Label>
                     </StackLayout>
@@ -70,24 +73,6 @@
                             Orientation="Horizontal"
                             VerticalOptions="StartAndExpand">
                         <Label 
-                            FontAttributes="Bold"
-                            FontSize="Medium" 
-                            Text="Crédito Actual:"
-                            TextColor="Black">
-                        </Label>
-                        <Label 
-                            FontSize="Medium" 
-                            Text="{Binding InfoCredito.CreditoActual}"
-                            TextColor="Black">
-                        </Label>
-                    </StackLayout>
-                    <StackLayout
-                            Grid.Column="0"
-                            Grid.Row="4"
-                            Orientation="Horizontal"
-                            VerticalOptions="StartAndExpand">
-                        <Label 
-                            FontAttributes="Bold"
                             FontSize="Medium" 
                             Text="Objetivo de Cobro:"
                             TextColor="Black">
@@ -95,6 +80,7 @@
 
                         <Label 
                             FontSize="Medium" 
+                            FontAttributes="Bold"
                             Text="{Binding InfoCredito.ObjetivoCobro}"
                             TextColor="Black">
                         </Label>

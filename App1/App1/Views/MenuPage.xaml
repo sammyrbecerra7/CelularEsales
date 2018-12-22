@@ -14,17 +14,16 @@
                 <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
 
-            <Image Source="logoideal_opt" Grid.Row="0" VerticalOptions="Start" HeightRequest="80"></Image>
-
-                <ActivityIndicator IsRunning="{Binding IsRunning,Mode=TwoWay}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"></ActivityIndicator>
+                <Image IsVisible="{Binding IsVisible, Mode=TwoWay}" Source="logoideal_opt" Grid.Row="0" VerticalOptions="Start" HeightRequest="80"></Image>
+                <ActivityIndicator IsRunning="{Binding IsRunning,Mode=TwoWay}" Margin="10" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"></ActivityIndicator>
                 <Label IsVisible="{Binding IsRunning}" 
                        HorizontalOptions="CenterAndExpand" 
-                       VerticalOptions="StartAndExpand" Margin="5,5" 
+                       VerticalOptions="EndAndExpand" Margin="10" 
                        TextColor="Black"  FontSize="Medium"
                        FontAttributes="Bold" Text="{Binding MensajeCargando,Mode=TwoWay}"/>
-                <Label IsVisible="{Binding IsVisible, Mode=TwoWay}" VerticalOptions="CenterAndExpand" Margin="0,10" HorizontalOptions="Center" TextColor="Blue" Text="¿ Has olvidado la contraseña ?"/>
+                
 
-                <Button
+                <Button IsVisible="{Binding IsVisible, Mode=TwoWay}"
             Grid.Row="1"   
             Image="ic_sync"
             BackgroundColor="#0072C6"
@@ -35,7 +34,7 @@
             FontSize="Large"
             Command="{Binding SincronizarCommand}"           
            />
-                <Button
+                <Button IsVisible="{Binding IsVisible, Mode=TwoWay}"
             Grid.Row="2"            
             BackgroundColor="#0072C6"
             Text="Información Crédito"
@@ -46,8 +45,8 @@
             Command="{Binding InformacionCreditoCommand}"           
            />
 
-            
-                <Button
+
+                <Button IsVisible="{Binding IsVisible, Mode=TwoWay}"
             Grid.Row="3"            
             BackgroundColor="#0072C6"
             Text="Salir"

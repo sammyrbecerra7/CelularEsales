@@ -14,8 +14,10 @@ namespace Common.Utils
         public static string CorreoNoEncontrado { get { return "El correo solicitado no se ha encontrado"; } }
         public static string OK { get { return "OK"; } }
 
-        public static string ErrorAlSincornizar { get { return "Error Al sincronizar, intente de nuevo por favor"; } }
+        public static string ErrorAlSincornizar { get { return "Error al sincronizar, intente de nuevo por favor"; } }
 
         public static string Autenticando { get { return "Autenticando"; } }
+
+       
     }
 }

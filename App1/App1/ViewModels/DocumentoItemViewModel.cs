@@ -23,21 +23,7 @@ namespace App1.ViewModels
             var a = this;
             var estadoCuenta = new EstadoCuentaViewModel
             {
-                Codigo = a.Codigo,
-                ClienteCodigo = a.ClienteCodigo,
-                NombreCorto = a.NombreCorto,
-                TipoDocumento = a.TipoDocumento,
-                Valor = a.Valor,
-                ValorMonedaLocal = a.ValorMonedaLocal,
-                FechaDocumento = a.FechaDocumento,
-                SpecialGLIndicator = a.SpecialGLIndicator,
-                FacturaNumeroLegal = a.FacturaNumeroLegal,
-                Referencia = a.Referencia,
-                Texto = a.Texto,
-                PaymentTerm = a.PaymentTerm,
-                Moneda = a.Moneda,
-                ValorNeto = a.ValorNeto,
-                EbillingDocument = a.EbillingDocument,
+                
             };
             await App.Navigator.PushAsync(new DetalleDocumentoPage(estadoCuenta));
         }
