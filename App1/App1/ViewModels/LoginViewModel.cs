@@ -17,14 +17,6 @@ namespace App1.ViewModels
 {
     public class LoginViewModel : PropertyChangedClass
     {
-
-        #region Servicios
-
-        private ApiService apiService;
-
-        #endregion
-
-
         #region Atributos
 
         private string contrasena ;
@@ -79,7 +71,7 @@ namespace App1.ViewModels
 
         public LoginViewModel()
         {
-            apiService = new ApiService();
+           
             Email = string.Empty;
             Contrasena =string.Empty;
             Recuerdame = true;
@@ -129,7 +121,7 @@ namespace App1.ViewModels
                 return;
             }
 
-            var conexion = await apiService.CheckConnection();
+            var conexion = await App.apiService.CheckConnection();
             if (!conexion.IsSuccess)
             {
                 this.IsRunning = false;
@@ -138,9 +130,9 @@ namespace App1.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error", conexion.Message, "Aceptar");
                 return;
             }
-
+           
+            var token = await App.apiService.GetToken(Global.UrlBase, this.Email, this.Contrasena);
             MensajeCargando = Mensaje.Sincronizando;
-            var token = await apiService.GetToken(Global.UrlBase, this.Email, this.Contrasena);
             if (token == null)
             {
                 this.IsRunning = false;
@@ -166,158 +158,18 @@ namespace App1.ViewModels
             Settings.AccessToken = token.AccessToken;
             Settings.UserASP = token.UserName; //aquí guardamos el nombre del asesor
             Settings.IsRemembered = this.Recuerdame;
-            Task.Run(() => this.Sincronizar()).Wait();
+           
             this.IsRunning = false;
             this.IsEnabled = true;
-            IsVisible = true;
-            Application.Current.MainPage = new MasterPage();
+            this.isVisible = true;
+            var result= Task.Run(() => App.SincronizarService.Sincronizar().Result).Result;
+            if (result==true)
+            {
+                Application.Current.MainPage = new MasterPage();
+            }
+
+            await Application.Current.MainPage.DisplayAlert("Error", "No Sincronizado", "Aceptar");
             return;
-        }
-
-        public async Task Sincronizar()
-        {
-            var a = await apiService.CheckConnection();
-            if (a.IsSuccess)
-            {
-                try
-                {
-                    await this.EliminarTodosClientes();
-                    await this.CargarClientes();
-                    await this.InsertarTodosClientes();
-
-                    await this.EliminarTodosDocumentos();
-                    await this.CargarDocumentos();
-                    await this.InsertarTodosDocumentos();
-
-                    await this.EliminarInformacionCredito();
-                    await this.InsertarInformacionCredito();
-                }
-                catch (System.Exception ex)
-                {
-                   IsVisible = true;
-                   await App.Master.DisplayAlert("Error", Mensaje.ErrorAlSincornizar, "Aceptar");
-                    throw;
-                }
-            }
-        }
-
-        private async Task EliminarInformacionCredito()
-        {
-            await App.dataService.EliminarInformacionCredito();
-        }
-
-        private async Task InsertarInformacionCredito()
-        {
-
-            var response = await apiService.Post<List<InfoCredito>>(Global.UrlBase, Global.RoutePrefix, Global.ObtenerInfoCredito, Settings.TokenType, Settings.AccessToken, new Vendedor { Correo=Settings.UserASP} );
-
-            if (!response.IsSuccess)
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
-                return;
-            }
-
-            var infocredito = (List<InfoCredito>) response.Result;
-            var lista = infocredito.Select(c => new InfoCreditoSqLite
-            {
-                Codigo = c.Codigo,
-                VendedorCodigo = c.VendedorCodigo,
-                Anio = c.Anio,
-                Mes = c.Mes,
-                CreditoActual = c.CreditoActual,
-                CreditoLimite = c.CreditoLimite,
-                ObjetivoCobro = c.ObjetivoCobro
-
-            }).ToList();
-           
-            await App.dataService.Insert(lista);
-            App.InfoCreditoSqLite = lista.FirstOrDefault();
-        }
-
-        private async Task InsertarTodosDocumentos()
-        {
-            var lista =App.ListaDocumentos.Select(x => new DocumentosSqLite
-            {
-                Codigo = x.Codigo,
-                ClienteCodigo = x.ClienteCodigo,
-                SpecialGLIndicator = x.SpecialGLIndicator,
-                FacturaNumeroLegal = x.FacturaNumeroLegal,
-                FechaDocumento = x.FechaDocumento,
-                Referencia = x.Referencia,
-                TipoDocumento = x.TipoDocumento,
-                ValorMonedaLocal = x.ValorMonedaLocal,
-                Valor = x.Valor,
-                Texto = x.Texto,
-                PaymentTerm = x.PaymentTerm,
-                NumeroDiasAVencer = x.NumeroDiasAVencer,
-                ValorNeto = x.ValorNeto,
-                NombreCorto = x.NombreCorto,
-                EbillingDocument = x.EbillingDocument
-
-            }).ToList();
-            App.ListaDocumentoSqLite = lista;
-            await App.dataService.Insert(App.ListaDocumentoSqLite);
-        }
-        private async Task CargarDocumentos()
-        {
-            var response = await apiService.Post<List<Documentos>>(Global.UrlBase, Global.RoutePrefix, Global.ListarDocumentos, Settings.TokenType, Settings.AccessToken, App.ListaClienteSqLite);
-
-            if (!response.IsSuccess)
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
-                return;
-            }
-            App.ListaDocumentos = (List<Documentos>)response.Result;
-
-        }
-        private async Task InsertarTodosClientes()
-        {
-            var lista = App.ListaClientes.Select(x => new ClienteSqLite
-            {
-                NombreCompleto = x.NombreCompleto,
-                Codigo = x.Codigo,
-                CreditoDisponible = x.CreditoDisponible,
-                CreditoLimite = x.CreditoLimite,
-                VendedorCodigo = x.VendedorCodigo,
-                Garantia = x.Garantia,
-                RUC = x.RUC,
-                TotalFacturado = x.TotalFacturado,
-                TotalVencido = x.TotalVencido,
-                ObjetivoCobro = x.ObjetivoCobro,
-                EntregasAbiertas = x.EntregasAbiertas,
-                TotalChequesPosfechados = x.TotalChequesPosfechados,
-                OrdenesAbiertas = x.OrdenesAbiertas,
-            }).ToList();
-            App.ListaClienteSqLite = lista;
-            await App.dataService.Insert(App.ListaClienteSqLite);
-            Settings.SincronizacionCompleta = true;
-        }
-
-        private async Task EliminarTodosClientes()
-        {
-            await App.dataService.EliminarTodosClientes();
-        }
-
-        private async Task EliminarTodosDocumentos()
-        {
-            await App.dataService.EliminarTodosEstadoCuenta();
-        }
-        private async Task CargarClientes()
-        {
-            var response = await apiService.Post<List<Cliente>>(Global.UrlBase,Global.RoutePrefix, Global.ObtenerClientePorVendedor,Settings.TokenType,Settings.AccessToken,new Vendedor {Correo=Settings.UserASP });
-
-            if (!response.IsSuccess)
-            {
-              
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
-                return;
-            }
-
-            App.ListaClientes = (List<Cliente>)response.Result;
-
         }
         #endregion
     }

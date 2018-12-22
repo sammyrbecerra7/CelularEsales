@@ -16,7 +16,15 @@
 
             <Image Source="logoideal_opt" Grid.Row="0" VerticalOptions="Start" HeightRequest="80"></Image>
 
-            <Button
+                <ActivityIndicator IsRunning="{Binding IsRunning,Mode=TwoWay}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"></ActivityIndicator>
+                <Label IsVisible="{Binding IsRunning}" 
+                       HorizontalOptions="CenterAndExpand" 
+                       VerticalOptions="StartAndExpand" Margin="5,5" 
+                       TextColor="Black"  FontSize="Medium"
+                       FontAttributes="Bold" Text="{Binding MensajeCargando,Mode=TwoWay}"/>
+                <Label IsVisible="{Binding IsVisible, Mode=TwoWay}" VerticalOptions="CenterAndExpand" Margin="0,10" HorizontalOptions="Center" TextColor="Blue" Text="¿ Has olvidado la contraseña ?"/>
+
+                <Button
             Grid.Row="1"   
             Image="ic_sync"
             BackgroundColor="#0072C6"
@@ -25,7 +33,7 @@
             BorderRadius="10"
             VerticalOptions="Center"
             FontSize="Large"
-            Command="{Binding InformacionCreditoCommand}"           
+            Command="{Binding SincronizarCommand}"           
            />
                 <Button
             Grid.Row="2"            

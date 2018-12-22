@@ -91,6 +91,9 @@ namespace App1.Services
             return list;
         }
 
+
+       
+
         public async Task<InfoCreditoSqLite> ObtenerInformacionCredito()
         {
             var query = await this.connection.QueryAsync<InfoCreditoSqLite>("select * from [InfoCreditoSqLite]");
@@ -111,6 +114,32 @@ namespace App1.Services
         public async Task<List<DocumentosSqLite>> ListarDocumentos()
         {
             var query = await this.connection.QueryAsync<DocumentosSqLite>("select * from [DocumentosSqLite]");
+            var array = query.ToArray();
+            var list = array.Select(x => new DocumentosSqLite
+            {
+                Codigo = x.Codigo,
+                ClienteCodigo = x.ClienteCodigo,
+                SpecialGLIndicator = x.SpecialGLIndicator,
+                FacturaNumeroLegal = x.FacturaNumeroLegal,
+                FechaDocumento = x.FechaDocumento,
+                Referencia = x.Referencia,
+                TipoDocumento = x.TipoDocumento,
+                ValorMonedaLocal = x.ValorMonedaLocal,
+                Valor = x.Valor,
+                Texto = x.Texto,
+                PaymentTerm = x.PaymentTerm,
+                NumeroDiasAVencer = x.NumeroDiasAVencer,
+                ValorNeto = x.ValorNeto,
+                NombreCorto = x.NombreCorto,
+                EbillingDocument = x.EbillingDocument
+
+            }).ToList();
+            return list;
+        }
+
+        public async Task<List<DocumentosSqLite>> ListarDocumentosRelacionados(DocumentosSqLite documentosSqLite)
+        {
+            var query = await this.connection.QueryAsync<DocumentosSqLite>("select * from [DocumentosSqLite] " );
             var array = query.ToArray();
             var list = array.Select(x => new DocumentosSqLite
             {

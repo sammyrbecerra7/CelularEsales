@@ -22,6 +22,9 @@ namespace App1
         public static DataService dataService { get; set; }
 
         public static ApiService apiService { get; set; }
+
+        public static SincronizarService SincronizarService { get; set; }
+
         public static List<ClienteSqLite> ListaClienteSqLite { get; set; }
 
         public static InfoCreditoSqLite InfoCreditoSqLite { get; set; }
@@ -46,6 +49,7 @@ namespace App1
             LoginPage = new LoginPage();
             dataService = new DataService();
             apiService = new ApiService();
+            SincronizarService = new SincronizarService();
             ListaClientes = new List<Cliente>();
             ListaDocumentos = new List<Documentos>();
             ListaDocumentoSqLite = new List<DocumentosSqLite>();

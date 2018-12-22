@@ -9,8 +9,8 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="10" >
-                <Image Source="logoideal_opt" VerticalOptions="StartAndExpand"></Image>
-                <Grid IsVisible="{Binding IsVisible,Mode=TwoWay}" Margin="0" HorizontalOptions="CenterAndExpand">
+                <Image IsVisible="{Binding IsVisible, Mode=TwoWay}" Source="logoideal_opt" VerticalOptions="StartAndExpand"></Image>
+                <Grid IsVisible="{Binding IsVisible, Mode=TwoWay}"  Margin="0" HorizontalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
@@ -20,9 +20,9 @@
                     <Label Grid.Row="1" Grid.Column="0" Text="Contraseña" VerticalOptions="Center" />
                     <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Contrasena,Mode=TwoWay}"  IsPassword="True" Placeholder="Entre su contraseña"></Entry>
                 </Grid>
-                <StackLayout IsVisible="{Binding isVisible}" Orientation="Horizontal" VerticalOptions="CenterAndExpand">
-                    <Label IsVisible="{Binding IsVisible, Mode=TwoWay}"  Text="{i18n:Translate Recuerdame}" HorizontalOptions="StartAndExpand" VerticalOptions="Center"></Label>
-                    <Switch IsVisible="{Binding IsVisible, Mode=TwoWay}" IsToggled="{Binding Recuerdame,Mode=TwoWay}" HorizontalOptions="End"  ></Switch>
+                <StackLayout IsVisible="{Binding IsVisible, Mode=TwoWay}"  Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                    <Label   Text="{i18n:Translate Recuerdame}" HorizontalOptions="StartAndExpand" VerticalOptions="Center"></Label>
+                    <Switch  IsToggled="{Binding Recuerdame,Mode=TwoWay}" HorizontalOptions="End"  ></Switch>
                 </StackLayout>
                 <!--<Label Text="E-Mail" FontSize="Large" FontAttributes="Bold" />
             <Entry Keyboard="Email" Placeholder="Entre su Email"></Entry>
