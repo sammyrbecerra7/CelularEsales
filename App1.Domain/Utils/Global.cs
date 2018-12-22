@@ -23,5 +23,7 @@ namespace App1.Domain.Utils
         public static string ListarDocumentos { get { return "/Clientes/ObtenerFacturasPorCliente"; } set {; } }
 
         public static string ObtenerInfoCredito { get { return "/Clientes/ObtenerInfoCredito"; } set {; } }
+
+        public static string InsertarPagos { get { return "/Clientes/InsertarPagos"; } set {; } }
     }
 }

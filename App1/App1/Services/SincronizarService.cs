@@ -93,7 +93,6 @@ namespace App1.Services
                 ValorNeto = x.ValorNeto,
                 NombreCorto = x.NombreCorto,
                 EbillingDocument = x.EbillingDocument
-
             }).ToList();
             App.ListaDocumentoSqLite = lista;
             await App.dataService.Insert(App.ListaDocumentoSqLite);
