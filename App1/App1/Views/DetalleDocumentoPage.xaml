@@ -24,7 +24,6 @@
                             FontAttributes="Bold"
                             FontSize="Medium" 
                             Text="{Binding EstadoCuenta.Codigo}"
-                            
                             TextColor="Black">
                         </Label>
                         <Label 

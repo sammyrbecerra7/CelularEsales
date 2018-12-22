@@ -21,7 +21,16 @@ namespace App1.ViewModels
         private bool isRunning;
         public MenuViewModel()
         {
-            isVisible = false;
+            IsVisible = true;
+            IsRunning = false;
+            
+        }
+
+        private string mensajeCargando;
+        public string MensajeCargando
+        {
+            get { return this.mensajeCargando; }
+            set { SetValue(ref this.mensajeCargando, value); }
         }
 
         public bool IsRunning
@@ -64,15 +73,30 @@ namespace App1.ViewModels
 
         private async void Sincronizar()
         {
-            IsVisible = true;
+            var conexion = await App.apiService.CheckConnection();
+            if (!conexion.IsSuccess)
+            {
+                this.IsRunning = false;
+
+                IsVisible = true;
+                await Application.Current.MainPage.DisplayAlert("Error", conexion.Message, "Aceptar");
+                return;
+            }
+            MensajeCargando = Mensaje.Sincronizando;
+            IsVisible = false;
             IsRunning = true;
             var result = Task.Run(() => App.SincronizarService.Sincronizar().Result).Result;
             if (result == true)
             {
+                await Task.Delay(3000);
+                IsRunning = false;
+                IsVisible = true;
                 Application.Current.MainPage = new MasterPage();
             }
 
-            await Application.Current.MainPage.DisplayAlert("Error", "No Sincronizado", "Aceptar");
+            IsRunning = false;
+            IsVisible = true;
+            await Application.Current.MainPage.DisplayAlert("Error", Mensaje.ErrorAlSincornizar, "Aceptar");
         }
 
         private async void InformacionCredito()

@@ -23,7 +23,7 @@ namespace App1.ViewModels
         
         private bool isRunning ;
         
-        private bool isEnabled;
+        
 
         private bool isVisible;
 
@@ -39,11 +39,7 @@ namespace App1.ViewModels
             set { SetValue(ref this.contrasena, value); }
         }
 
-        public bool IsEnabled
-        {
-            get { return this.isEnabled; }
-            set { SetValue(ref this.isEnabled, value); }
-        }
+       
 
         public bool Recuerdame { get; set; }
         public bool IsRunning
@@ -75,7 +71,7 @@ namespace App1.ViewModels
             Email = string.Empty;
             Contrasena =string.Empty;
             Recuerdame = true;
-            IsEnabled = true;
+            IsRunning = false;
             IsVisible = true;
 
 
@@ -99,7 +95,7 @@ namespace App1.ViewModels
         private async void Login()
         {
             this.IsRunning = true;
-            this.IsEnabled = false;
+           
             IsVisible = false;
             MensajeCargando = Mensaje.Autenticando;
 
@@ -107,7 +103,6 @@ namespace App1.ViewModels
             {
                 IsVisible = true;
                 this.IsRunning = false;
-                this.IsEnabled = true;
                 await Application.Current.MainPage.DisplayAlert(Languages.Aceptar, Languages.ValidacionEmail,Languages.Aceptar);
                 return;
             }
@@ -115,8 +110,7 @@ namespace App1.ViewModels
             if (string.IsNullOrEmpty(this.Contrasena))
             {
                 this.IsRunning = false;
-                this.IsEnabled = true;
-                IsVisible = true;
+                this.IsVisible = true;
                 await Application.Current.MainPage.DisplayAlert("Error", "Debe ingresar la contraseña", "Aceptar");
                 return;
             }
@@ -125,18 +119,18 @@ namespace App1.ViewModels
             if (!conexion.IsSuccess)
             {
                 this.IsRunning = false;
-                this.IsEnabled = true;
+                 
                 IsVisible = true;
                 await Application.Current.MainPage.DisplayAlert("Error", conexion.Message, "Aceptar");
                 return;
             }
-           
-            var token = await App.apiService.GetToken(Global.UrlBase, this.Email, this.Contrasena);
+
             MensajeCargando = Mensaje.Sincronizando;
+            var token = await App.apiService.GetToken(Global.UrlBase, this.Email, this.Contrasena);
             if (token == null)
             {
                 this.IsRunning = false;
-                this.IsEnabled = true;
+                 
                 IsVisible = true;
                 await Application.Current.MainPage.DisplayAlert("Error", "Ha ocurrido un error, intente de nuevo", "Aceptar");
                 return;
@@ -145,7 +139,7 @@ namespace App1.ViewModels
             if (string.IsNullOrEmpty(token.AccessToken))
             {
                 this.IsRunning = false;
-                this.IsEnabled = true;
+                 
                 IsVisible = true;
                 await Application.Current.MainPage.DisplayAlert("Error", token.ErrorDescription, "Aceptar");
                 this.Contrasena = string.Empty;
@@ -160,15 +154,19 @@ namespace App1.ViewModels
             Settings.IsRemembered = this.Recuerdame;
            
             this.IsRunning = false;
-            this.IsEnabled = true;
-            this.isVisible = true;
+             
+          
             var result= Task.Run(() => App.SincronizarService.Sincronizar().Result).Result;
             if (result==true)
             {
+                this.IsVisible = true;
+                IsRunning = false;
                 Application.Current.MainPage = new MasterPage();
             }
 
-            await Application.Current.MainPage.DisplayAlert("Error", "No Sincronizado", "Aceptar");
+            IsRunning = false;
+            IsVisible = true;
+            await Application.Current.MainPage.DisplayAlert("Error", Mensaje.ErrorAlSincornizar, "Aceptar");
             return;
         }
         #endregion
