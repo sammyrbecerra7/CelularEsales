@@ -287,7 +287,19 @@
             FontSize="Large"
             Command="{Binding PagoCommand}"           
            />
-                </Grid>
+
+                        <Button
+            Grid.Row="16"            
+            BackgroundColor="#0072C6"
+            Text="Realizar Pago"
+            TextColor="White"
+            BorderRadius="10"
+            VerticalOptions="Center"
+            FontSize="Large"
+            Command="{Binding DocumentosCommand}"           
+           />
+
+                    </Grid>
             </Frame>
         </StackLayout>
         </ScrollView>
