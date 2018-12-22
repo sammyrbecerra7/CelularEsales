@@ -37,7 +37,7 @@ namespace App1.API.Controllers
 
             try
             {
-                if (!string.IsNullOrEmpty(vendedor?.Codigo))
+                if (!string.IsNullOrEmpty(vendedor?.Correo))
                 {
                     db.Configuration.ProxyCreationEnabled = false;
                     var infoCredito = await db.InfoCredito.Where(x => x.Vendedor.Correo == vendedor.Correo)
