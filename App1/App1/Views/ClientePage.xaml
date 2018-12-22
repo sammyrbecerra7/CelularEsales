@@ -6,118 +6,82 @@
              BackgroundColor="Silver">
     <ContentPage.Content>
         <ScrollView>
-
             <StackLayout Padding="5">
                 <Frame Margin="2" CornerRadius="10" HasShadow="True" BackgroundColor="White">
                     <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+
                         <Label
                         Grid.Column="0"
-                        Grid.Row="0"
-                         FontSize="Medium"
-                        Text="Nombre Completo:"
-                        TextColor="Black">
-                    </Label>
-                    <Label
-                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
                         Grid.Row="0"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.NombreCompleto}"
                         TextColor="Black">
-                    </Label>
-                    <Label
+                        </Label>
+
+                        <Label
                         Grid.Column="0"
                         Grid.Row="1"
                          FontSize="Medium"
-                        Text="Crédito Limite:"
+                        Text="Código:"
                         TextColor="Black">
-                    </Label>
-                    <Label
+                        </Label>
+                        <Label
                         Grid.Column="1"
                         Grid.Row="1"
                          FontSize="Medium"
                         FontAttributes="Bold"
-                        Text="{Binding  Cliente.Limite}"
+                        Text="{Binding  Cliente.Codigo}"
                         TextColor="Black">
-                    </Label>
-                    <Label
+                        </Label>
+
+                        <Label
                         Grid.Column="0"
                         Grid.Row="2"
                          FontSize="Medium"
-                        Text="Garantía:"
+                        Text="Crédito Límite:"
                         TextColor="Black">
-                    </Label>
-                    <Label
+                        </Label>
+                        <Label
                         Grid.Column="1"
                         Grid.Row="2"
                          FontSize="Medium"
                         FontAttributes="Bold"
-                        Text="{Binding  Cliente.Garantia}"
+                        Text="{Binding  Cliente.CreditoLimite}"
                         TextColor="Black">
-                    </Label>
+                        </Label>
 
                         <Label
                         Grid.Column="0"
                         Grid.Row="3"
                          FontSize="Medium"
-                        Text="Total Vencido:"
+                        Text="Crédito Disponible:"
                         TextColor="Black">
                         </Label>
                         <Label
                         Grid.Column="1"
                         Grid.Row="3"
-                         FontSize="Medium"
-                        FontAttributes="Bold"
-                        Text="{Binding  Cliente.TotalVencido}"
-                        TextColor="Black">
-                        </Label>
-
-                        <Label
-                        Grid.Column="0"
-                        Grid.Row="4"
-                         FontSize="Medium"
-                        Text="Total Facturado:"
-                        TextColor="Black">
-                        </Label>
-                        <Label
-                        Grid.Column="1"
-                        Grid.Row="4"
-                         FontSize="Medium"
-                        FontAttributes="Bold"
-                        Text="{Binding  Cliente.TotalAdeudado}"
-                        TextColor="Black">
-                        </Label>
-
-                        <Label
-                        Grid.Column="0"
-                        Grid.Row="5"
-                         FontSize="Medium"
-                        Text="Crédito Disponible"
-                        TextColor="Black">
-                        </Label>
-                        <Label
-                        Grid.Column="1"
-                        Grid.Row="5"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.CreditoDisponible}"
                         TextColor="Black">
                         </Label>
-
+                        
                         <Label
                         Grid.Column="0"
-                        Grid.Row="6"
+                        Grid.Row="4"
                          FontSize="Medium"
-                        Text="Objetivo Cobro"
+                        Text="Objetivo de Cobro:"
                         TextColor="Black">
                         </Label>
                         <Label
                         Grid.Column="1"
-                        Grid.Row="6"
+                        Grid.Row="4"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.ObjetivoCobro}"
@@ -126,9 +90,41 @@
 
                         <Label
                         Grid.Column="0"
+                        Grid.Row="5"
+                         FontSize="Medium"
+                        Text="Total Facturado:"
+                        TextColor="Black">
+                        </Label>
+                        <Label
+                        Grid.Column="1"
+                        Grid.Row="5"
+                         FontSize="Medium"
+                        FontAttributes="Bold"
+                        Text="{Binding  Cliente.TotalFacturado}"
+                        TextColor="Black">
+                        </Label>
+
+                        <Label
+                        Grid.Column="0"
+                        Grid.Row="6"
+                         FontSize="Medium"
+                        Text="Total Vencido:"
+                        TextColor="Black">
+                        </Label>
+                        <Label
+                        Grid.Column="1"
+                        Grid.Row="6"
+                         FontSize="Medium"
+                        FontAttributes="Bold"
+                        Text="{Binding  Cliente.TotalVencido}"
+                        TextColor="Black">
+                        </Label>
+
+                        <Label
+                        Grid.Column="0"
                         Grid.Row="7"
                          FontSize="Medium"
-                        Text="Cheques Posfechados"
+                        Text="RUC:"
                         TextColor="Black">
                         </Label>
                         <Label
@@ -136,7 +132,7 @@
                         Grid.Row="7"
                          FontSize="Medium"
                         FontAttributes="Bold"
-                        Text="{Binding  Cliente.TotalChequesPosfechados}"
+                        Text="{Binding  Cliente.RUC}"
                         TextColor="Black">
                         </Label>
 
@@ -144,12 +140,44 @@
                         Grid.Column="0"
                         Grid.Row="8"
                          FontSize="Medium"
-                        Text="Ordenes Abiertas"
+                        Text="Garantia:"
                         TextColor="Black">
                         </Label>
                         <Label
                         Grid.Column="1"
                         Grid.Row="8"
+                         FontSize="Medium"
+                        FontAttributes="Bold"
+                        Text="{Binding  Cliente.Garantia}"
+                        TextColor="Black">
+                        </Label>
+
+                        <Label
+                        Grid.Column="0"
+                        Grid.Row="9"
+                         FontSize="Medium"
+                        Text="Cheques Pos Fechados:"
+                        TextColor="Black">
+                        </Label>
+                        <Label
+                        Grid.Column="1"
+                        Grid.Row="9"
+                         FontSize="Medium"
+                        FontAttributes="Bold"
+                        Text="{Binding  Cliente.TotalChequesPosfechados}"
+                        TextColor="Black">
+                        </Label>
+                        
+                        <Label
+                        Grid.Column="0"
+                        Grid.Row="10"
+                         FontSize="Medium"
+                        Text="Ordenes Abiertas:"
+                        TextColor="Black">
+                        </Label>
+                        <Label
+                        Grid.Column="1"
+                        Grid.Row="10"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.OrdenesAbiertas}"
@@ -158,14 +186,14 @@
 
                         <Label
                         Grid.Column="0"
-                        Grid.Row="9"
+                        Grid.Row="11"
                          FontSize="Medium"
-                        Text="Entregas Abiertas"
+                        Text="Entregas Abiertas:"
                         TextColor="Black">
                         </Label>
                         <Label
                         Grid.Column="1"
-                        Grid.Row="9"
+                        Grid.Row="11"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.EntregasAbiertas}"

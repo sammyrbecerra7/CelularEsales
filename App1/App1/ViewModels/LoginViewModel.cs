@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ using App1.Helpers;
 using App1.Services;
 using App1.Views;
 using Common.Models;
+using Common.Utils;
 using GalaSoft.MvvmLight.Command;
 using Xamarin.Forms;
 
@@ -30,6 +32,8 @@ namespace App1.ViewModels
         private bool isRunning ;
         
         private bool isEnabled;
+
+        private bool isVisible;
 
         #endregion
 
@@ -55,6 +59,20 @@ namespace App1.ViewModels
             get { return this.isRunning; }
             set { SetValue(ref this.isRunning, value); }
         }
+
+        public bool IsVisible
+        {
+            get { return this.isVisible; }
+            set { SetValue(ref this.isVisible, value); }
+        }
+
+        private string mensajeCargando;
+        public string MensajeCargando
+        {
+            get { return this.mensajeCargando; }
+            set { SetValue(ref this.mensajeCargando, value); }
+        }
+
         #endregion
 
         #region Constructores
@@ -66,6 +84,7 @@ namespace App1.ViewModels
             Contrasena =string.Empty;
             Recuerdame = true;
             IsEnabled = true;
+            IsVisible = true;
 
 
         }
@@ -89,11 +108,15 @@ namespace App1.ViewModels
         {
             this.IsRunning = true;
             this.IsEnabled = false;
+            IsVisible = false;
+            MensajeCargando = Mensaje.Autenticando;
+
             if (string.IsNullOrEmpty(Email))
             {
-                await Application.Current.MainPage.DisplayAlert(Languages.Aceptar, Languages.ValidacionEmail,Languages.Aceptar);
+                IsVisible = true;
                 this.IsRunning = false;
                 this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(Languages.Aceptar, Languages.ValidacionEmail,Languages.Aceptar);
                 return;
             }
 
@@ -101,6 +124,7 @@ namespace App1.ViewModels
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
+                IsVisible = true;
                 await Application.Current.MainPage.DisplayAlert("Error", "Debe ingresar la contraseña", "Aceptar");
                 return;
             }
@@ -110,15 +134,18 @@ namespace App1.ViewModels
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
+                IsVisible = true;
                 await Application.Current.MainPage.DisplayAlert("Error", conexion.Message, "Aceptar");
                 return;
             }
 
+            MensajeCargando = Mensaje.Sincronizando;
             var token = await apiService.GetToken(Global.UrlBase, this.Email, this.Contrasena);
             if (token == null)
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
+                IsVisible = true;
                 await Application.Current.MainPage.DisplayAlert("Error", "Ha ocurrido un error, intente de nuevo", "Aceptar");
                 return;
             }
@@ -127,18 +154,22 @@ namespace App1.ViewModels
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
+                IsVisible = true;
                 await Application.Current.MainPage.DisplayAlert("Error", token.ErrorDescription, "Aceptar");
                 this.Contrasena = string.Empty;
                 return;
             }
+            
 
-            this.IsRunning = false;
-            this.IsEnabled = true;
+
             Settings.TokenType = token.TokenType;
             Settings.AccessToken = token.AccessToken;
             Settings.UserASP = token.UserName; //aquí guardamos el nombre del asesor
             Settings.IsRemembered = this.Recuerdame;
             Task.Run(() => this.Sincronizar()).Wait();
+            this.IsRunning = false;
+            this.IsEnabled = true;
+            IsVisible = true;
             Application.Current.MainPage = new MasterPage();
             return;
         }
@@ -148,34 +179,85 @@ namespace App1.ViewModels
             var a = await apiService.CheckConnection();
             if (a.IsSuccess)
             {
-                await this.EliminarTodosClientes();
-                await this.CargarClientes();
-                await this.InsertarTodosClientes();
+                try
+                {
+                    await this.EliminarTodosClientes();
+                    await this.CargarClientes();
+                    await this.InsertarTodosClientes();
 
-                await this.EliminarTodosDocumentos();
-                await this.CargarDocumentos();
-                await this.InsertarTodosDocumentos();
+                    await this.EliminarTodosDocumentos();
+                    await this.CargarDocumentos();
+                    await this.InsertarTodosDocumentos();
+
+                    await this.EliminarInformacionCredito();
+                    await this.InsertarInformacionCredito();
+                }
+                catch (System.Exception ex)
+                {
+                   IsVisible = true;
+                   await App.Master.DisplayAlert("Error", Mensaje.ErrorAlSincornizar, "Aceptar");
+                    throw;
+                }
             }
         }
 
+        private async Task EliminarInformacionCredito()
+        {
+            await App.dataService.EliminarInformacionCredito();
+        }
+
+        private async Task InsertarInformacionCredito()
+        {
+
+            var response = await apiService.Post<List<InfoCredito>>(Global.UrlBase, Global.RoutePrefix, Global.ObtenerInfoCredito, Settings.TokenType, Settings.AccessToken, new Vendedor { Correo=Settings.UserASP} );
+
+            if (!response.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
+
+            var infocredito = (List<InfoCredito>) response.Result;
+            var lista = infocredito.Select(c => new InfoCreditoSqLite
+            {
+                Codigo = c.Codigo,
+                VendedorCodigo = c.VendedorCodigo,
+                Anio = c.Anio,
+                Mes = c.Mes,
+                CreditoActual = c.CreditoActual,
+                CreditoLimite = c.CreditoLimite,
+                ObjetivoCobro = c.ObjetivoCobro
+
+            }).ToList();
+           
+            await App.dataService.Insert(lista);
+            App.InfoCreditoSqLite = lista.FirstOrDefault();
+        }
 
         private async Task InsertarTodosDocumentos()
         {
-            var lista =App.ListaFacturas.Select(c => new DocumentosSqLite
+            var lista =App.ListaDocumentos.Select(x => new DocumentosSqLite
             {
-                Codigo = c.Codigo,
-                ClienteCodigo = c.ClienteCodigo,
-                NombreCorto = c.NombreCorto,
-                TipoDocumento = c.TipoDocumento,
-                Valor = c.Valor,
-                ValorMonedaLocal=c.ValorMonedaLocal,
-                EbillingDocument=c.EbillingDocument,
-                FacturaNumeroLegal=c.FacturaNumeroLegal
-                
-                
+                Codigo = x.Codigo,
+                ClienteCodigo = x.ClienteCodigo,
+                SpecialGLIndicator = x.SpecialGLIndicator,
+                FacturaNumeroLegal = x.FacturaNumeroLegal,
+                FechaDocumento = x.FechaDocumento,
+                Referencia = x.Referencia,
+                TipoDocumento = x.TipoDocumento,
+                ValorMonedaLocal = x.ValorMonedaLocal,
+                Valor = x.Valor,
+                Texto = x.Texto,
+                PaymentTerm = x.PaymentTerm,
+                NumeroDiasAVencer = x.NumeroDiasAVencer,
+                ValorNeto = x.ValorNeto,
+                NombreCorto = x.NombreCorto,
+                EbillingDocument = x.EbillingDocument
+
             }).ToList();
-            App.ListaFacturaSqLite = lista;
-            await App.dataService.Insert(App.ListaFacturaSqLite);
+            App.ListaDocumentoSqLite = lista;
+            await App.dataService.Insert(App.ListaDocumentoSqLite);
         }
         private async Task CargarDocumentos()
         {
@@ -187,21 +269,26 @@ namespace App1.ViewModels
                 Application.Current.MainPage = new NavigationPage(new LoginPage());
                 return;
             }
-            App.ListaFacturas = (List<Documentos>)response.Result;
+            App.ListaDocumentos = (List<Documentos>)response.Result;
 
         }
         private async Task InsertarTodosClientes()
         {
-            var lista = App.ListaClientes.Select(c => new ClienteSqLite
+            var lista = App.ListaClientes.Select(x => new ClienteSqLite
             {
-                Codigo = c.Codigo,
-                NombreCompleto = c.NombreCompleto,
-                VendedorCodigo = c.VendedorCodigo,
-                Limite = c.CreditoLimite,
-                Garantia = c.Garantia,
-                TotalVencido = c.TotalVencido,
-                TotalAdeudado = c.TotalFacturado,
-                UltimaFechaActualizacion = c.UltimaFechaActualizacion
+                NombreCompleto = x.NombreCompleto,
+                Codigo = x.Codigo,
+                CreditoDisponible = x.CreditoDisponible,
+                CreditoLimite = x.CreditoLimite,
+                VendedorCodigo = x.VendedorCodigo,
+                Garantia = x.Garantia,
+                RUC = x.RUC,
+                TotalFacturado = x.TotalFacturado,
+                TotalVencido = x.TotalVencido,
+                ObjetivoCobro = x.ObjetivoCobro,
+                EntregasAbiertas = x.EntregasAbiertas,
+                TotalChequesPosfechados = x.TotalChequesPosfechados,
+                OrdenesAbiertas = x.OrdenesAbiertas,
             }).ToList();
             App.ListaClienteSqLite = lista;
             await App.dataService.Insert(App.ListaClienteSqLite);

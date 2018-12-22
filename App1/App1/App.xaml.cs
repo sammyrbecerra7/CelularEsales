@@ -11,6 +11,7 @@ using System.Linq;
 using Common;
 using Common.Models;
 using App1.Data;
+using System;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace App1
@@ -23,11 +24,13 @@ namespace App1
         public static ApiService apiService { get; set; }
         public static List<ClienteSqLite> ListaClienteSqLite { get; set; }
 
-        public static List<DocumentosSqLite> ListaFacturaSqLite { get; set; }
+        public static InfoCreditoSqLite InfoCreditoSqLite { get; set; }
+
+        public static List<DocumentosSqLite> ListaDocumentoSqLite { get; set; }
 
         public static List<Cliente> ListaClientes { get; set; }
 
-        public static List<Documentos> ListaFacturas { get; set; }
+        public static List<Documentos> ListaDocumentos { get; set; }
 
         public static LoginPage LoginPage { get; set; }
 
@@ -44,16 +47,18 @@ namespace App1
             dataService = new DataService();
             apiService = new ApiService();
             ListaClientes = new List<Cliente>();
-            ListaFacturas = new List<Documentos>();
-            ListaFacturaSqLite = new List<DocumentosSqLite>();
-
+            ListaDocumentos = new List<Documentos>();
+            ListaDocumentoSqLite = new List<DocumentosSqLite>();
+            InfoCreditoSqLite = new InfoCreditoSqLite();
             Application.Current.MainPage = new MasterPage();
 
             //descomentar todo el bloquesiguiente para entrar con el login SB
             if (Settings.IsRemembered && !string.IsNullOrEmpty(Settings.UserASP))
             {
                 Task.Run(() => this.CargarClientes()).Wait();
-               
+                Task.Run(() => this.CargarFacturas()).Wait();
+                Task.Run(() => this.CargarInfoCredito()).Wait();
+
 
                 Application.Current.MainPage = new MasterPage();
 
@@ -68,7 +73,6 @@ namespace App1
         }
 
         
-
 
         public async Task Sincronizar()
         {
@@ -88,9 +92,25 @@ namespace App1
             }
         }
 
+
+        private async Task CargarInfoCredito()
+        {
+            App.InfoCreditoSqLite =await App.dataService.ObtenerInformacionCredito();
+        }
+
         private async Task InsertarTodosClientes()
         {
-            var lista = ListaClientes.Select(x => new ClienteSqLite { Codigo = x.Codigo, NombreCompleto = x.NombreCompleto,  VendedorCodigo = x.VendedorCodigo, Limite = x.CreditoLimite, Garantia = x.Garantia, TotalVencido = x.TotalVencido, TotalAdeudado = x.TotalVencido, UltimaFechaActualizacion = x.UltimaFechaActualizacion}).ToList();
+            var lista = ListaClientes.Select(x => new ClienteSqLite
+            {
+                Codigo = x.Codigo,
+                NombreCompleto = x.NombreCompleto,
+                VendedorCodigo = x.VendedorCodigo,
+                CreditoLimite = x.CreditoLimite,
+                Garantia = x.Garantia,
+                TotalVencido = x.TotalVencido,
+                TotalFacturado = x.TotalFacturado,
+                UltimaFechaActualizacion = x.UltimaFechaActualizacion
+            }).ToList();
             ListaClienteSqLite = lista;
            
             await dataService.Insert(ListaClienteSqLite);
@@ -98,9 +118,9 @@ namespace App1
 
         private async Task InsertarTodosEstadoCuenta()
         {
-            var lista = ListaFacturas.Select(x => new DocumentosSqLite { Codigo = x.Codigo, ClienteCodigo = x.ClienteCodigo, NombreCorto = x.NombreCorto,Tipo = x.TipoDocumento, ValorTotal = x.Valor }).ToList();
-            ListaFacturaSqLite = lista;
-            await dataService.Insert(ListaFacturaSqLite);
+            //var lista = ListaFacturas.Select(x => new DocumentosSqLite { Codigo = x.Codigo, ClienteCodigo = x.ClienteCodigo, NombreCorto = x.NombreCorto,Tipo = x.TipoDocumento, ValorTotal = x.Valor }).ToList();
+            //ListaFacturaSqLite = lista;
+            //await dataService.Insert(ListaFacturaSqLite);
         }
 
         private async Task EliminarTodosClientes()
@@ -121,15 +141,8 @@ namespace App1
 
         private async Task CargarFacturas()
         {
-            var response = await apiService.GetList<Documentos>(Global.UrlBase, Global.RoutePrefix, Global.ListarFacturas, Settings.TokenType, Settings.AccessToken,ListaClientes);
-
-            if (!response.IsSuccess)
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
-                return;
-            }
-            ListaFacturas = (List<Documentos>)response.Result;
+           
+           App.ListaDocumentoSqLite= await App.dataService.ListarDocumentos();
 
         }
 

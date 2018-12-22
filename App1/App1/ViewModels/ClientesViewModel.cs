@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -110,22 +111,21 @@ namespace App1.ViewModels
         private IEnumerable<ClienteItemViewModel> ConvertirClienteItem()
         {
 
-            return App.ListaClienteSqLite.Select(c => new ClienteItemViewModel
+            return App.ListaClienteSqLite.Select(x => new ClienteItemViewModel
             {
-                Codigo = c.Codigo,
-                NombreCompleto = c.NombreCompleto,
-                VendedorCodigo = c.VendedorCodigo,
-                CreditoLimite = c.Limite,
-                Garantia = c.Garantia,
-                TotalVencido = c.TotalVencido,
-                TotalFacturado = c.TotalAdeudado,
-                UltimaFechaActualizacion = c.UltimaFechaActualizacion,
-                ObjetivoCobro = c.ObjetivoCobro,
-                CreditoDisponible = c.CreditoDisponible,
-                RUC = c.RUC,
-                TotalChequesPosfechados = c.TotalChequesPosfechados,
-                OrdenesAbiertas = c.OrdenesAbiertas,
-                EntregasAbiertas = c.EntregasAbiertas
+                NombreCompleto = x.NombreCompleto,
+                Codigo = x.Codigo,
+                CreditoDisponible = x.CreditoDisponible,
+                CreditoLimite = x.CreditoLimite ==null ? Convert.ToDecimal(0.0) :Convert.ToDecimal(x.CreditoLimite),
+                VendedorCodigo = x.VendedorCodigo,
+                Garantia = x.Garantia,
+                RUC = x.RUC,
+                TotalFacturado = x.TotalFacturado,
+                TotalVencido = x.TotalVencido,
+                ObjetivoCobro = x.ObjetivoCobro,
+                EntregasAbiertas = x.EntregasAbiertas,
+                TotalChequesPosfechados = x.TotalChequesPosfechados,
+                OrdenesAbiertas = x.OrdenesAbiertas,
             });
         }
         #endregion

@@ -15,23 +15,9 @@ namespace App1.ViewModels
 
         public InfoCreditoViewModel()
         {
-            
-            Task.Run(() => this.ObtenerDatos()).Wait();
+            InfoCredito = new InfoCreditoSqLite();
+            InfoCredito = App.InfoCreditoSqLite;
+         
         }
-
-        public async Task ObtenerDatos()
-        {
-            this.InfoCredito = new InfoCreditoSqLite();
-            InfoCredito = await App.dataService.ObtenerInformacionCredito();
-        }
-
-
-        public ICommand PagoCommand { get { return new RelayCommand(RealizaPago); } }
-
-        private async void RealizaPago()
-        {
-            await App.Navigator.PushAsync(new InfoCreditoPage());
-        }
-
     }
 }

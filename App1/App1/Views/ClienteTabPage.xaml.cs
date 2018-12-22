@@ -15,16 +15,16 @@ namespace App1.Views
 		{
             Children.Add(new ClientePage(cliente));
             //Children.Add(new BordesPage(pais.Borders));
-            var listaFacturas = new ObservableCollection<DocumentoItemViewModel>(App.ListaFacturaSqLite
+            var listaFacturas = new ObservableCollection<DocumentoItemViewModel>(App.ListaDocumentoSqLite
                     .Where(x => x.ClienteCodigo == cliente.Codigo)
                     .Select(c => new DocumentoItemViewModel
                     {
                         Codigo = c.Codigo,
                         ClienteCodigo = c.ClienteCodigo,
                         NombreCorto = c.NombreCorto,
-                        TipoDocumento = c.Tipo,
-                        Valor = c.ValorTotal,
-                        FechaDocumento = c.FechaVencimiento,
+                        TipoDocumento = c.TipoDocumento,
+                        Valor = c.Valor,
+                        FechaDocumento = c.FechaDocumento,
                         SpecialGLIndicator = c.SpecialGLIndicator,
                         FacturaNumeroLegal = c.FacturaNumeroLegal,
                         Referencia = c.Referencia,
@@ -33,7 +33,7 @@ namespace App1.Views
                         ValorNeto = c.ValorNeto,
                         EbillingDocument = c.EbillingDocument,
                         Seleccionado = false,
-                        EsFactura=c.Tipo=="DZ" ?true:false,
+                        EsFactura=c.TipoDocumento=="DZ" ?true:false,
                     }
                     ).ToList());
             Children.Add(new FacturasPage(listaFacturas));
