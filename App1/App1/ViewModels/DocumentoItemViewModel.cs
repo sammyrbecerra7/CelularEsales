@@ -1,14 +1,14 @@
 ﻿using System.Windows.Input;
+using App1.Domain.ModelsResult;
 using App1.Views;
 using Common.Models;
 using GalaSoft.MvvmLight.Command;
 
 namespace App1.ViewModels
 {
-    public class DocumentoItemViewModel : Documentos
+    public class DocumentoItemViewModel : DocumentosSqLite
     {
-        private Documentos estadocuenta;
-        public bool Seleccionado { get; set; }
+        private DocumentosSqLite estadocuenta;
         public DocumentoItemViewModel()
         {
             this.estadocuenta = this;
@@ -16,16 +16,11 @@ namespace App1.ViewModels
 
         public ICommand DetalleDocumentoCommand { get { return new RelayCommand(DetalleDocumento); } }
 
-        public bool EsFactura { get; internal set; }
-
         private async void DetalleDocumento()
         {
             var a = this;
-            var estadoCuenta = new EstadoCuentaViewModel
-            {
-                
-            };
-            await App.Navigator.PushAsync(new DetalleDocumentoPage(estadoCuenta));
+            
+            await App.Navigator.PushAsync(new DetalleDocumentoPage(a));
         }
 
     }

@@ -7,9 +7,9 @@ using Xamarin.Forms.Xaml;
 namespace App1.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class FacturasPage : ContentPage
+	public partial class DocumentosPage : ContentPage
 	{
-		public FacturasPage(ObservableCollection<DocumentoItemViewModel> lista)
+		public DocumentosPage(ObservableCollection<DocumentoItemViewModel> lista)
 		{
             BindingContext = new ListaFacturasViewModel(lista);
 			InitializeComponent ();

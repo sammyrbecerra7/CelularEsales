@@ -24,10 +24,14 @@ namespace App1.ViewModels
         private ObservableCollection<ClienteItemViewModel> clientes;
         private bool isRefreshing;
         private string filtro;
-        
+       
+
         #endregion
 
         #region propiedades
+
+
+        
         public ObservableCollection<ClienteItemViewModel> Clientes
         {
             get { return this.clientes; }
@@ -95,7 +99,6 @@ namespace App1.ViewModels
                                                                                 || x.NombreCompleto.ToLower().Contains(this.Filtro.ToLower())));
             return;
         }
-
        
         private async void CargarClientes()
         {
@@ -105,9 +108,7 @@ namespace App1.ViewModels
             this.Clientes = new ObservableCollection<ClienteItemViewModel>(this.ConvertirClienteItem());
             this.IsRefreshing = false;
         }
-
-       
-
+        
         private IEnumerable<ClienteItemViewModel> ConvertirClienteItem()
         {
 

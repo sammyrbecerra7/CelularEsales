@@ -13,7 +13,7 @@ namespace App1.Domain.Utils
 
         //public static string UrlBase { get { return "http://esalesideal.bekaert.com:9005"; } set {; } }
 
-        public static string UrlBase { get { return "http://192.168.6.177"; } set {; } }
+        public static string UrlBase { get { return "http://192.168.6.145"; } set {; } }
         public static string RoutePrefix { get { return "/movilApi/Api"; } set {; } }
 
         public static string ListarClientes { get { return "/Cliente/ListaCliente"; } set {; } }

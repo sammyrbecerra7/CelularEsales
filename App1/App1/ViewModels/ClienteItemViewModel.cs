@@ -1,13 +1,14 @@
 ﻿using System.Windows.Input;
+using App1.Domain.ModelsResult;
 using App1.Views;
 using Common.Models;
 using GalaSoft.MvvmLight.Command;
 
 namespace App1.ViewModels
 {
-    public class ClienteItemViewModel:Cliente
+    public class ClienteItemViewModel:ClienteSqLite
     {
-        private Cliente cliente;
+        private ClienteSqLite cliente;
         public ClienteItemViewModel()
         {
             this.cliente = this;

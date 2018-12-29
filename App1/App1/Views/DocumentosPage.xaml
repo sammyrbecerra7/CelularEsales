@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.Views.DocumentosPage"
+             BackgroundColor="Silver"
+             Title="Listado de Facturas">
+    <ContentPage.Content>
+        <StackLayout >
+            <StackLayout  HorizontalOptions="FillAndExpand" Margin="2" VerticalOptions="Start">
+                <Button BackgroundColor="Navy" HorizontalOptions="FillAndExpand" Command="{Binding PagarCommand}" TextColor="White" Text="Realizar Cobro"/>
+            </StackLayout>
+
+            <ListView 
+                BackgroundColor="Silver"
+                HasUnevenRows="true" 
+                ItemsSource="{Binding Documentos}"
+                SeparatorVisibility="None"
+               >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Margin="5" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding DetalleDocumentoCommand}">
+                                    </TapGestureRecognizer>
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Label 
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="StartAndExpand"
+                                            FontSize="Medium" 
+                                            Text="Factura:"
+                                            TextColor="Black">
+                                    </Label>
+                                    <Label  
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            FontAttributes="None"
+                                            HorizontalOptions="EndAndExpand"
+                                            FontSize="Medium" 
+                                            Text="{Binding NombreCorto}"
+                                            TextColor="Black">
+                                    </Label>
+                                   
+                                        <Label 
+                                            Grid.Column="0"
+                                            Grid.Row="1"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="StartAndExpand"
+                                            FontSize="Medium" 
+                                            Text="Valor:"
+                                            TextColor="Black">
+                                        </Label>
+                                        <Label  
+                                            Grid.Column="1"
+                                            Grid.Row="1"
+                                            FontAttributes="None"
+                                            HorizontalOptions="EndAndExpand"
+                                            FontSize="Medium" 
+                                            Text="{Binding Valor}"
+                                            TextColor="Black">
+                                        </Label>
+
+                                         <Label 
+                                            Grid.Column="0"
+                                            Grid.Row="2"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="StartAndExpand"
+                                            FontSize="Medium" 
+                                            Text="Fecha:"
+                                            TextColor="Black">
+                                        </Label>
+                                        <Label  
+                                            
+                                            Grid.Column="1"
+                                            Grid.Row="2"
+                                            FontAttributes="None"
+                                            HorizontalOptions="EndAndExpand"
+                                            FontSize="Medium" 
+                                            Text="{Binding FechaDocumento,StringFormat='{0:MMMM d, yyyy}'}"
+                                            TextColor="Black">
+                                        </Label>
+                                        <Label 
+                                            Grid.Column="0"
+                                            Grid.Row="3"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="StartAndExpand"
+                                            FontSize="Medium" 
+                                            Text="Días a vencer:"
+                                            TextColor="Black">
+                                        </Label>
+                                        <Label  
+                                            Grid.Column="1"
+                                            Grid.Row="3"
+                                            FontAttributes="None"
+                                            HorizontalOptions="EndAndExpand"
+                                            FontSize="Medium" 
+                                            Text="{Binding NumeroDiasAVencer}"
+                                            TextColor="Black">
+                                        </Label>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

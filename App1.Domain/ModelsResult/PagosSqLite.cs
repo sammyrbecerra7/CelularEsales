@@ -1,20 +1,39 @@
 ﻿using System;
+using SQLite;
 
 namespace App1.Domain.ModelsResult
 {
     public class PagosSqLite
     {
-        public string Documento { get; set; }
-        public decimal Valor { get; set; }
+        [PrimaryKey,AutoIncrement]
+        public int PagoCodigo { get; set; }
+
+        public string FacturaNumeroLegal { get; set; }
+
+        public string CodigoDocumento { get; set; }
+
         public string FormaPagoCodigo { get; set; }
-        public string Dato1 { get; set; }
-        public string Dato2 { get; set; }
-        public string Dato3 { get; set; }
-        public decimal Dato4 { get; set; }
-        public decimal Dato5 { get; set; }
-        public decimal Dato6 { get; set; }
+
+        public decimal Valor { get; set; }
+
+        public string Banco { get; set; }
+
+        public string NumeroCheque { get; set; }
+
+        public DateTime? FechaCobro { get; set; }
+
+        public string Postfechado { get; set; }
+
+        public string NumeroTransferencia { get; set; }
+
+        public DateTime? FechaTransferencia { get; set; }
+
         public string EnviadoIdeal { get; set; }
+
         public string EnviadoBwise { get; set; }
+
         public string Contrapartida { get; set; }
+
+        public string TransferidoSAP { get; set; }
     }
 }

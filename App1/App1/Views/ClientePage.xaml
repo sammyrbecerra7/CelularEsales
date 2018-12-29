@@ -29,11 +29,15 @@
                         Grid.Row="1"
                          FontSize="Medium"
                         Text="Código:"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                         TextColor="Black">
                         </Label>
                         <Label
                         Grid.Column="1"
                         Grid.Row="1"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.Codigo}"
@@ -43,6 +47,8 @@
                         <Label
                         Grid.Column="0"
                         Grid.Row="2"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                          FontSize="Medium"
                         Text="Crédito Límite:"
                         TextColor="Black">
@@ -50,6 +56,8 @@
                         <Label
                         Grid.Column="1"
                         Grid.Row="2"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.CreditoLimite}"
@@ -59,6 +67,8 @@
                         <Label
                         Grid.Column="0"
                         Grid.Row="3"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                          FontSize="Medium"
                         Text="Crédito Disponible:"
                         TextColor="Black">
@@ -66,6 +76,8 @@
                         <Label
                         Grid.Column="1"
                         Grid.Row="3"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.CreditoDisponible}"
@@ -75,6 +87,8 @@
                         <Label
                         Grid.Column="0"
                         Grid.Row="4"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                          FontSize="Medium"
                         Text="Objetivo de Cobro:"
                         TextColor="Black">
@@ -82,6 +96,8 @@
                         <Label
                         Grid.Column="1"
                         Grid.Row="4"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.ObjetivoCobro}"
@@ -92,6 +108,8 @@
                         Grid.Column="0"
                         Grid.Row="5"
                          FontSize="Medium"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                         Text="Total Facturado:"
                         TextColor="Black">
                         </Label>
@@ -99,6 +117,8 @@
                         Grid.Column="1"
                         Grid.Row="5"
                          FontSize="Medium"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.TotalFacturado}"
                         TextColor="Black">
@@ -108,6 +128,8 @@
                         Grid.Column="0"
                         Grid.Row="6"
                          FontSize="Medium"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                         Text="Total Vencido:"
                         TextColor="Black">
                         </Label>
@@ -115,6 +137,8 @@
                         Grid.Column="1"
                         Grid.Row="6"
                          FontSize="Medium"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.TotalVencido}"
                         TextColor="Black">
@@ -123,6 +147,8 @@
                         <Label
                         Grid.Column="0"
                         Grid.Row="7"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                          FontSize="Medium"
                         Text="RUC:"
                         TextColor="Black">
@@ -130,6 +156,8 @@
                         <Label
                         Grid.Column="1"
                         Grid.Row="7"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.RUC}"
@@ -139,6 +167,8 @@
                         <Label
                         Grid.Column="0"
                         Grid.Row="8"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                          FontSize="Medium"
                         Text="Garantia:"
                         TextColor="Black">
@@ -146,6 +176,8 @@
                         <Label
                         Grid.Column="1"
                         Grid.Row="8"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.Garantia}"
@@ -155,6 +187,8 @@
                         <Label
                         Grid.Column="0"
                         Grid.Row="9"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                          FontSize="Medium"
                         Text="Cheques Pos Fechados:"
                         TextColor="Black">
@@ -162,6 +196,8 @@
                         <Label
                         Grid.Column="1"
                         Grid.Row="9"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.TotalChequesPosfechados}"
@@ -171,6 +207,8 @@
                         <Label
                         Grid.Column="0"
                         Grid.Row="10"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                          FontSize="Medium"
                         Text="Ordenes Abiertas:"
                         TextColor="Black">
@@ -178,6 +216,8 @@
                         <Label
                         Grid.Column="1"
                         Grid.Row="10"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.OrdenesAbiertas}"
@@ -187,6 +227,8 @@
                         <Label
                         Grid.Column="0"
                         Grid.Row="11"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                          FontSize="Medium"
                         Text="Entregas Abiertas:"
                         TextColor="Black">
@@ -194,6 +236,8 @@
                         <Label
                         Grid.Column="1"
                         Grid.Row="11"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                          FontSize="Medium"
                         FontAttributes="Bold"
                         Text="{Binding  Cliente.EntregasAbiertas}"

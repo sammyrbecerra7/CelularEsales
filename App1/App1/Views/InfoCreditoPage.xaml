@@ -7,84 +7,96 @@
     <ContentPage.Content>
         <StackLayout  >
             
-            <Frame Margin="5" CornerRadius="20" HasShadow="True" BackgroundColor="White">
+            <Frame Margin="5" CornerRadius="10" HasShadow="True" BackgroundColor="White">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <StackLayout
+                   
+                        <Label 
                             Grid.Column="0"
                             Grid.Row="0"
-                            Orientation="Horizontal"
-                            VerticalOptions="StartAndExpand">
-                        <Label 
                            FontSize="Medium" 
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                             Text="Código:"
                             TextColor="Black">
-                            >
                         </Label>
                         <Label 
+                            Grid.Column="1"
+                            Grid.Row="0"
+                             VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                             FontSize="Medium" 
                             FontAttributes="Bold"
                             Text="{Binding InfoCredito.VendedorCodigo}"
                             TextColor="Black">
                         </Label>
-                    </StackLayout>
-                    <StackLayout
+                   
+                 
+                        <Label 
                             Grid.Column="0"
                             Grid.Row="1"
-                            Orientation="Horizontal"
-                            VerticalOptions="StartAndExpand">
-                        <Label 
-                            
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                             FontSize="Medium" 
                             Text="Límite de Crédito:"
                             TextColor="Black">
                         </Label>
                         <Label 
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                             FontSize="Medium" 
                             FontAttributes="Bold"
                             Text="{Binding InfoCredito.CreditoLimite}"
                             TextColor="Black">
                         </Label>
-                    </StackLayout>
-                    <StackLayout
+                   
+                  
+                        <Label 
                             Grid.Column="0"
                             Grid.Row="2"
-                            Orientation="Horizontal"
-                            VerticalOptions="StartAndExpand">
-                        <Label 
-                           
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                             FontSize="Medium" 
                             Text="Crédito Actual:"
                             TextColor="Black">
                         </Label>
                         <Label 
+                            Grid.Column="1"
+                            Grid.Row="2"
+                            VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                             FontSize="Medium" 
                              FontAttributes="Bold"
                             Text="{Binding InfoCredito.CreditoActual}"
                             TextColor="Black">
                         </Label>
-                    </StackLayout>
-                    <StackLayout
-                            Grid.Column="0"
-                            Grid.Row="3"
-                            Orientation="Horizontal"
-                            VerticalOptions="StartAndExpand">
+                   
+                  
                         <Label 
+                             Grid.Column="0"
+                            Grid.Row="3"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
                             FontSize="Medium" 
                             Text="Objetivo de Cobro:"
                             TextColor="Black">
                         </Label>
 
                         <Label 
+                             Grid.Column="1"
+                            Grid.Row="3"
+                            VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"
                             FontSize="Medium" 
                             FontAttributes="Bold"
                             Text="{Binding InfoCredito.ObjetivoCobro}"
                             TextColor="Black">
                         </Label>
-                    </StackLayout>
                 </Grid>
             </Frame>
         </StackLayout>

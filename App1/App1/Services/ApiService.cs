@@ -343,7 +343,7 @@
                 var newRecord = JsonConvert.DeserializeObject<Response>(result);
                 if (newRecord.IsSuccess)
                 {
-                    var NewResponse = JsonConvert.DeserializeObject<T>(newRecord.Result.ToString());
+                    var NewResponse = JsonConvert.DeserializeObject<T>(newRecord.Result==null ? "": newRecord.Result.ToString());
                     return new Response
                     {
                         IsSuccess = newRecord.IsSuccess,

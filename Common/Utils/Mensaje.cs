@@ -8,6 +8,8 @@ namespace Common.Utils
 {
    public static class Mensaje
     {
+        public static string Error { get { return "Error."; } }
+
         public static string Sincronizando { get { return "Sincronizando."; } }
 
         public static string ErrorAlConsultar { get { return "Error al consultar"; } }
@@ -18,6 +20,11 @@ namespace Common.Utils
 
         public static string Autenticando { get { return "Autenticando"; } }
 
-       
+        public static string Informacion { get { return "Información"; } }
+        public static string Aceptar { get { return "Aceptar"; } }
+
+        public static string Satisfactorio { get { return "La acción se a realizado satisfactoriamente"; } }
+        
+        public static string ValidarFormulario { get { return "Debe seleccionar todos los campos"; } }
     }
 }

@@ -18,7 +18,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame Margin="5" CornerRadius="20" HasShadow="True" BackgroundColor="White">
+                            <Frame Margin="5" CornerRadius="10" HasShadow="True" BackgroundColor="White">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer 
                                         Command="{Binding DetalleClienteCommand}">

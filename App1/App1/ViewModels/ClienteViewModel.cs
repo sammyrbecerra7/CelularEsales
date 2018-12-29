@@ -5,13 +5,14 @@ using Common.Models;
 using App1.Models;
 using App1.Views;
 using Xamarin.Forms;
+using App1.Domain.ModelsResult;
 
 namespace App1.ViewModels
 {
    public class ClienteViewModel
     {
-        public Cliente Cliente { get; set; }
-        public ClienteViewModel(Cliente cliente)
+        public ClienteSqLite Cliente { get; set; }
+        public ClienteViewModel(ClienteSqLite cliente)
         {
             this.Cliente = cliente;
         }

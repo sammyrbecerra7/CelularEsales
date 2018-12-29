@@ -11,7 +11,7 @@ namespace App1.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ClienteTabPage : TabbedPage
 	{
-		public ClienteTabPage(Cliente cliente)
+		public ClienteTabPage(ClienteSqLite cliente)
 		{
             Children.Add(new ClientePage(cliente));
             //Children.Add(new BordesPage(pais.Borders));
@@ -22,21 +22,15 @@ namespace App1.Views
                         Codigo = c.Codigo,
                         ClienteCodigo = c.ClienteCodigo,
                         NombreCorto = c.NombreCorto,
-                        TipoDocumento = c.TipoDocumento,
                         Valor = c.Valor,
                         FechaDocumento = c.FechaDocumento,
-                        SpecialGLIndicator = c.SpecialGLIndicator,
-                        FacturaNumeroLegal = c.FacturaNumeroLegal,
-                        Referencia = c.Referencia,
-                        PaymentTerm = c.PaymentTerm,
-                        Moneda = c.Moneda,
-                        ValorNeto = c.ValorNeto,
-                        EbillingDocument = c.EbillingDocument,
-                        Seleccionado = false,
-                        EsFactura=c.TipoDocumento=="DZ" ?true:false,
+                        NumeroDiasAVencer=c.NumeroDiasAVencer,
+                        FacturaNumeroLegal=c.FacturaNumeroLegal,
                     }
                     ).ToList());
-            Children.Add(new FacturasPage(listaFacturas));
+
+
+            Children.Add(new DocumentosPage(listaFacturas));
             //Children.Add(new MonedasPage(pais.Currencies));
             //Children.Add(new TranslationsPage(pais.Translations));
             //BindingContext = new PaisViewModel(pais);

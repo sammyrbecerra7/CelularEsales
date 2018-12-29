@@ -10,18 +10,18 @@ namespace App1.ViewModels
 {
     class ListaFacturasViewModel
     {
-        public ObservableCollection<DocumentoItemViewModel> Facturas { get; set; }
+        public ObservableCollection<DocumentoItemViewModel> Documentos { get; set; }
 
-        public ListaFacturasViewModel(ObservableCollection<DocumentoItemViewModel> facturas)
+        public ListaFacturasViewModel(ObservableCollection<DocumentoItemViewModel> documentos)
         {
-            Facturas = facturas;
+            Documentos = documentos;
         }
 
         public ICommand PagarCommand { get { return new RelayCommand(Pagar); } }
 
         private async void Pagar()
         {
-            var a = Facturas;
+            var a = Documentos;
             await App.Navigator.PushAsync(new CobroPage());
         }
 

@@ -9,42 +9,64 @@
         <ScrollView>
             <StackLayout >
 
-            <Frame Margin="5" CornerRadius="20" HasShadow="True" BackgroundColor="White">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                
+                <Frame IsVisible="{Binding IsVisible}" Margin="5" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
 
-                        <StackLayout Padding="1"
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            Orientation="Horizontal"
-                            VerticalOptions="StartAndExpand">
-                            <Label 
-                            FontAttributes="Bold"
-                            FontSize="Medium" 
-                            Text="Banco"
-                            TextColor="Black">
-                            </Label>
-                            <Entry Text="{Binding PagoItem.Banco,Mode=TwoWay}" 
-                            FontSize="Medium" 
-                            TextColor="Black">
-                            </Entry>
-                        </StackLayout>
+
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" FontAttributes="Bold"  FontSize="Medium" Text="{Binding PagoItem.FacturaNumeroLegal,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+                       
+                        <Label Grid.Row="1" Grid.Column="0" Text="Forma de Pago:" VerticalOptions="Center" />
+                        <Picker Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ListaFormaPago,Mode=TwoWay}" Title="Seleccione la forma de pago" ItemDisplayBinding="{Binding Nombre}" SelectedItem = "{Binding FormaPago}"></Picker>
+                        
+                        <Label Grid.Row="2" Grid.Column="0" Text="Valor:" VerticalOptions="Center" />
+                        <Entry Grid.Row="2" Grid.Column="1" Keyboard="Numeric" Text="{Binding PagoItem.Valor,Mode=TwoWay}"   Placeholder="Entre el valor"></Entry>
+
+
+                        <Label Grid.Row="6" IsVisible="{Binding IsVisibleCheque}" Grid.Column="0" Text="Postfechado:" VerticalOptions="Center" />
+                        <Picker Grid.Row="6" IsVisible="{Binding IsVisibleCheque}" Grid.Column="1" ItemsSource="{Binding ListaPostFechado,Mode=TwoWay}" Title="Postfechado" ItemDisplayBinding="{Binding Nombre}" SelectedItem = "{Binding PostFechado}"></Picker>
+
+                        <Label Grid.Row="3" IsVisible="{Binding IsVisiblePostFechado}"  Grid.Column="0" Text="Banco:" VerticalOptions="Center"/>
+                        <Picker Grid.Row="3" IsVisible="{Binding IsVisiblePostFechado}" Grid.Column="1" ItemsSource="{Binding ListaBanco,Mode=TwoWay}" Title="Seleccione el banco" ItemDisplayBinding="{Binding Nombre}" SelectedItem = "{Binding Banco}"></Picker>
+                        
+                        
+
+                        <Label Grid.Row="5" IsVisible="{Binding IsVisiblePostFechado}" Grid.Column="0" Text="Fecha de cobro:" VerticalOptions="Center" />
+                        <DatePicker Grid.Row="5" IsVisible="{Binding IsVisiblePostFechado}" Grid.Column="1" Date="{Binding PagoItem.FechaCobro,Mode=TwoWay}"></DatePicker>
+
+                        <Label Grid.Row="4" IsVisible="{Binding IsVisiblePostFechado}" Grid.Column="0" Text="Número de cheque:" VerticalOptions="Center" />
+                        <Entry Grid.Row="4" IsVisible="{Binding IsVisiblePostFechado}" Grid.Column="1" Text="{Binding PagoItem.NumeroCheque,Mode=TwoWay}"   Placeholder="Entre el número del cheque"></Entry>
+
+                        
+                        <Label Grid.Row="7" IsVisible="{Binding IsVisibleTransferencia}" Grid.Column="0" Text="Número de transferencia:" VerticalOptions="Center" />
+                        <Entry Grid.Row="7" IsVisible="{Binding IsVisibleTransferencia}" Grid.Column="1" Text="{Binding PagoItem.NumeroTransferencia,Mode=TwoWay}"   Placeholder="Entre el número de transferencia"></Entry>
+
+                        <Label Grid.Row="8" IsVisible="{Binding IsVisibleTransferencia}" Grid.Column="0" Text="Fecha de transferencia:" VerticalOptions="Center" />
+                        <DatePicker Grid.Row="8" IsVisible="{Binding IsVisibleTransferencia}"  Grid.Column="1" Date="{Binding PagoItem.FechaTransferencia,Mode=TwoWay}"></DatePicker>
+
+
                         <Button
-            Grid.Row="15"            
-            BackgroundColor="#0072C6"
-            Text="Realizar Pago"
-            TextColor="White"
-            BorderRadius="10"
-            VerticalOptions="Center"
-            FontSize="Large"
-            Command="{Binding PagoCommand}"           
-           />
-                </Grid>
-            </Frame>
-        </StackLayout>
+                            Grid.Row="9" 
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            HorizontalOptions="CenterAndExpand"
+                            BackgroundColor="#0072C6"
+                            Text="Realizar Pago"
+                            TextColor="White"
+                            BorderRadius="10"
+                            VerticalOptions="Center"
+                            FontSize="Large"
+                            Command="{Binding PagoCommand}"           
+                           />   
+                    </Grid>
+                </Frame>
+                <ActivityIndicator IsRunning="{Binding IsRunning,Mode=TwoWay}" IsVisible="{Binding IsRunning}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"></ActivityIndicator>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
