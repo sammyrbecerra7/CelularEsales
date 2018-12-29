@@ -20,5 +20,12 @@ namespace App1.ViewModels
             await App.Navigator.PushAsync(new  InfoCreditoPage());
         }
 
+        //public ICommand DocumentosCommand { get { return new RelayCommand(DocumentosRelacionados); } }
+
+        //private async void DocumentosRelacionados()
+        //{
+
+        //    await App.Navigator.PushAsync(new DocuRelaPage());
+        //}
     }
 }

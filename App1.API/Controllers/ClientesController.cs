@@ -78,7 +78,7 @@ namespace App1.API.Controllers
                         db.Pagos.AddRange(listadopagos);
                         await db.SaveChangesAsync();
                         transaction.Commit();
-                        return new Response { IsSuccess = true, Message = Mensaje.OK, Result = null };
+                        return new Response { IsSuccess = true, Message = Mensaje.OK, Result = string.Empty };
                     }
                     catch (Exception ex)
                     {
