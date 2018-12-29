@@ -20,7 +20,9 @@ namespace App1.Services
             {
                 if (a.IsSuccess)
                 {
-                
+
+                    await this.EliminarPagos();
+
                     await this.EliminarTodosClientes();
                     await this.CargarClientes();
                     await this.InsertarTodosClientes();
@@ -41,7 +43,14 @@ namespace App1.Services
             }
             return false;
         }
-        private   async Task<bool> EliminarInformacionCredito()
+
+
+        private async Task EliminarPagos()
+        {
+            await App.dataService.EliminarPagos();
+        }
+
+        private async Task<bool> EliminarInformacionCredito()
         {
             await App.dataService.EliminarInformacionCredito();
             return true;

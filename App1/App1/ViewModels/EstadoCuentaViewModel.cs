@@ -20,13 +20,11 @@ namespace App1.ViewModels
 
     public class Banco
     {
-
         public string Nombre { get; set; }
     }
 
     public class PostFechado
     {
-
         public string Nombre { get; set; }
     }
 

@@ -162,7 +162,10 @@ namespace App1.Services
             }).ToList();
             return list;
         }
-
+        public async Task EliminarPagos()
+        {
+            var query = await this.connection.QueryAsync<PagosSqLite>("delete from [PagosSqLite]");
+        }
         public async Task EliminarTodosClientes()
         {
             var query = await this.connection.QueryAsync<ClienteSqLite>("delete from [ClienteSqLite]");

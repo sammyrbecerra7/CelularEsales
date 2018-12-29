@@ -12,7 +12,7 @@ namespace App1.Droid.Implementations
         public string GetDatabasePath()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            return Path.Combine(path, "Facturas.db3");
+            return Path.Combine(path, "MovilISales.db3");
         }
     }
 }

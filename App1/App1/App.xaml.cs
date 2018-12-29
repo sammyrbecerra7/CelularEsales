@@ -80,11 +80,12 @@ namespace App1
 
         public async Task Sincronizar()
         {
-            
 
+            
             var a = await apiService.CheckConnection();
             if (a.IsSuccess)
             {
+               
                 await this.EliminarTodosClientes();
                 await this.CargarClientes();
                 await this.InsertarTodosClientes();
@@ -132,6 +133,7 @@ namespace App1
             await dataService.EliminarTodosClientes();
         }
 
+        
         private async Task EliminarTodosFactura()
         {
             await dataService.EliminarTodosEstadoCuenta();

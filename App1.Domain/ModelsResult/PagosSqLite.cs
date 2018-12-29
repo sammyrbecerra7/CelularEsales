@@ -7,7 +7,7 @@ namespace App1.Domain.ModelsResult
     {
         [PrimaryKey,AutoIncrement]
         public int PagoCodigo { get; set; }
-
+        
         public string FacturaNumeroLegal { get; set; }
 
         public string CodigoDocumento { get; set; }
